@@ -87,11 +87,16 @@ from bisos.b import b_io
 import collections
 ####+END:
 
+from bisos.currents import currentsConfig
+from bisos.common import csParam
 
 import sys
-import collections
+import os
+import pathlib
 
 # from bisos.marmee import marmeAcctsLib, marmeeCurrentsLib
+from bisos.currents import currentsConfig
+
 from bisos.currents import currentsConfig
 
 """ #+begin_org
@@ -235,13 +240,13 @@ class examples(cs.Cmnd):
         cs.examples.menuChapter('*Services Activation, Services Manipulation*')
 
         icmWrapper = "" ;  cmndName = "marmeeQmailRun"
-        cps = cpsInit() ;  cmndArgs = "" ;
+        cps = cpsInit() ; cmndArgs = "" ;
         cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none', icmWrapper=icmWrapper)
 
         cs.examples.menuChapter('*Here Maildir*')
 
         icmWrapper = "" ;  cmndName = "marmeeHereMaildirSetup"
-        cps = cpsInit() ;  cmndArgs = "" ;
+        cps = cpsInit() ;  cps['aasMarmeeBase'] = cur_aasMarmee_base;  cmndArgs = "" ;
         cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none', icmWrapper=icmWrapper)
 
         icmWrapper = "" ;  cmndName = "marmeeHereMaildirVerify"
@@ -282,12 +287,12 @@ class marmeeQmailConfig(cs.Cmnd):
 
         return(cmndOutcome)
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "marmeeHereMaildirSetup" :comment "" :extent "verify" :parsMand "" :argsMin 0 :argsMax 0 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "marmeeHereMaildirSetup" :comment "" :extent "verify" :parsMand "aasMarmeeBase" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<marmeeHereMaildirSetup>>  =verify= ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<marmeeHereMaildirSetup>>  =verify= parsMand=aasMarmeeBase ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class marmeeHereMaildirSetup(cs.Cmnd):
-    cmndParamsMandatory = [ ]
+    cmndParamsMandatory = [ 'aasMarmeeBase', ]
     cmndParamsOptional = [ ]
     cmndArgsLen = {'Min': 0, 'Max': 0,}
 
@@ -295,21 +300,82 @@ class marmeeHereMaildirSetup(cs.Cmnd):
     def cmnd(self,
              rtInv: cs.RtInvoker,
              cmndOutcome: b.op.Outcome,
+             aasMarmeeBase: typing.Optional[str]=None,  # Cs Mandatory Param
     ) -> b.op.Outcome:
 
-        callParamsDict = {}
+        callParamsDict = {'aasMarmeeBase': aasMarmeeBase, }
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
             return b_io.eh.badOutcome(cmndOutcome)
+        aasMarmeeBase = csParam.mappedValue('aasMarmeeBase', aasMarmeeBase)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Install the following:
-*** qmailBinsPrep
-*** mailTools ---
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]] For each entry in ~alias/.qmail* we add a line for maildrop.
+        Incoming messages are also droped in at {aasMarmeeBase} with the right sudo.
+        In {aasMarmeeBase} here/maildir/main.
         #+end_org """)
 
-        print(self.docStrCmndMethod())
+        bpoId = bpo.givenPathObtainBpoId(aasMarmeeBase)
+
+        aasMarmeeBasePath = pathlib.Path(aasMarmeeBase)
+        hereBase = aasMarmeeBasePath.joinpath('here')
+        if not hereBase.is_dir(): hereBase.mkdir(parents=True, exist_ok=True)
+        envRelPath = pathlib.Path(bpo.givenPathObtainRelPath(str(hereBase)))
+
+        runEnvBases = b.pattern.sameInstance(
+            bpoRunBases.BpoRunEnvBases,
+            bpoId,
+            envRelPath,
+        )
+        runEnvBases.basesUpdate()
+        dataBase = runEnvBases.dataBasePath_obtain()
+
+        maildirFullPath = pathlib.Path(os.path.join(dataBase, 'maildir'))
+
+        if not maildirFullPath.is_dir():
+            maildirFullPath.mkdir(parents=True, exist_ok=True)
+
+        hereMaildirMainBase = maildirFullPath.joinpath('main')
+
+        print(f'AAA  {maildirFullPath}')
+        if not hereMaildirMainBase.joinpath('new').is_dir():
+            print(f'BBB  {maildirFullPath}')
+            if not (resStr := b.subProc.WOpW(invedBy=self, log=1).bash(
+                    f"""maildirmake {hereMaildirMainBase}""",
+            ).stdout):
+                b_io.eh.badOutcome(cmndOutcome)
+                #return(b_io.eh.badOutcome(cmndOutcome))
+            print(f'CCC  {maildirFullPath}')
+            os.system(f'chmod -R ugo+rwx {maildirFullPath}')
+            print(f'chmod -R ugo+rwx {maildirFullPath}')
+
+        def destPrep():
+            hereMaildirBase = aasMarmeeBasePath.joinpath('here/maildir')
+            if not hereMaildirBase.is_dir(): hereMaildirBase.mkdir(parents=True, exist_ok=True)
+
+            hereMaildirMainBase = hereMaildirBase.joinpath('main')
+            if not hereMaildirMainBase.is_dir():
+                if not (resStr := b.subProc.WOpW(invedBy=self, log=1).bash(
+                        f"""maildirmake {hereMaildirMainBase}""",
+                ).stdout):  return(b_io.eh.badOutcome(cmndOutcome))
+
+            return hereMaildirMainBase
+
+        #hereMaildirMainPath = destPrep()
+
+        aliasBasePath = pathlib.Path(os.path.expanduser('~alias'))
+        #dotQmailFiles = [x for x in aliasBasePath.iterdir() if not x.startswith(".qmail")]
+        for eachDotQmail in aliasBasePath.iterdir():
+            if eachDotQmail.name.startswith(".qmail"):
+                print(f"{eachDotQmail.name}")
+                if not (resStr := b.subProc.WOpW(invedBy=self, log=0).bash(
+                        f"""sudo cat  {eachDotQmail}""",
+                ).stdout):  return(b_io.eh.badOutcome(cmndOutcome))
+                print(resStr)
+                if not str(hereMaildirMainBase) in resStr:
+                    print(f"NOTYET Write {hereMaildirMainBase}")
 
         return(cmndOutcome)
+
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "marmeeHereMaildirVerify" :comment "" :extent "verify" :parsMand "" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
