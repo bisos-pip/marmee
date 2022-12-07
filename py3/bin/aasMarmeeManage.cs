@@ -134,6 +134,7 @@ from bisos.marmee import aasOutMailFps
 from bisos.marmee import aasMailFps
 from bisos.marmee import gmailOauth2
 from bisos.marmee import marmeeGmail
+from bisos.marmee import marmeeQmail
 
 
 csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.marmeeGmail', ]
@@ -242,6 +243,8 @@ class examples(cs.Cmnd):
         aasInMailFps.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, sectionTitle="default")
 
         marmeeGmail.examples_csu(cur_aasMarmee_base, sectionTitle="default")
+
+        marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
 
         b.niche.examplesNicheRun("usageEnvs")
 
