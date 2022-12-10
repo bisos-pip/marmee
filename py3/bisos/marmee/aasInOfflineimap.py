@@ -318,7 +318,7 @@ nametrans = lambda f: '[Gmail]/' + f if f in ['Drafts', 'Starred', 'Important', 
         )
         dataBase = runEnvBases.dataBasePath_obtain()
 
-        mailDirFullPath = os.path.join(dataBase, 'mailDir')
+        mailDirFullPath = os.path.join(dataBase, 'maildir')
 
         return mailDirFullPath
 
@@ -366,7 +366,7 @@ nametrans = lambda f: '[Gmail]/' + f if f in ['Drafts', 'Starred', 'Important', 
         )
         dataBase = runEnvBases.dataBasePath_obtain()
 
-        mailDirFullPath = os.path.join(dataBase, 'mailDir')
+        mailDirFullPath = os.path.join(dataBase, 'maildir')
 
         #mailDirFullPath = retrievalPars['inMailAcctMboxesPath'].parValueGet()
         #if not mailDirFullPath: return b_io.eh.badOutcome(outcome)

@@ -250,7 +250,7 @@ class marmeeQmailBinsPrep(cs.Cmnd):
             return b_io.eh.badOutcome(cmndOutcome)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Install the following:
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  IMPORTANT -- Should be done in bx-qmailBinsPrep.sh not here --- Install the following:
 *** qmailBinsPrep
 *** mailTools ---
         #+end_org """)

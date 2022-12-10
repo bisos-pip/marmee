@@ -154,6 +154,12 @@ This module is part of BISOS and its primary documentation is in  http://www.by-
 #+end_org """
 ####+END:
 
+####+BEGIN: b:py3:cs:orgItem/basic :type "=PyImports= " :title "*Py Library IMPORTS*" :comment "-- with classification based framework/imports"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =PyImports=  [[elisp:(outline-show-subtree+toggle)][||]] *Py Library IMPORTS* -- with classification based framework/imports  [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
+
 ####+BEGIN: b:py3:cs:framework/imports :basedOn "classification"
 """ #+begin_org
 ** Imports Based On Classification=cs-u
@@ -171,99 +177,53 @@ import copy
 import email
 import smtplib
 
-####+BEGIN: bx:dblock:python:section :title "Topic Section"
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(delete-other-windows)][(1)]]    *Topic Section*  [[elisp:(org-cycle)][| ]]  [[elisp:(org-show-subtree)][|=]]
-"""
+####+BEGIN: b:py3:cs:orgItem/basic :type "=Facility=  " :title "*Common Facilities*" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =Facility=   [[elisp:(outline-show-subtree+toggle)][||]] *Common Facilities*   [[elisp:(org-cycle)][| ]]
+#+end_org """
 ####+END:
 
-
-####+BEGIN: bx:dblock:python:subSection :title "Topic SubSection"
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ================ [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(delete-other-windows)][(1)]]          *Topic SubSection*  [[elisp:(org-cycle)][| ]]  [[elisp:(org-show-subtree)][|=]]
-"""
-####+END:
-
-
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Common Facilities*
-"""
-
-
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  enumFromStrWhenValid    [[elisp:(org-cycle)][| ]]
-"""
-def enumFromStrWhenValid(
-        enumTypeStr,
-        enumValueStr,
-):
-    """
-** Given a string, return the Enum's value if valid.
-
-Applies to current module because of exec and can therefore not be in a library
-and is therefor a dblock.
-
-Usage:
-    InjectionProgram = ucf.Enum(qmail='qmail', sendmail='sendmail',)
-    if enumFromStrWhenValid('InjectionProgram', inputStr) == None: badInput()
-
-Note: enumTypeStr.enumValueStr  gets execed. So a '-', "+" in enumValueStr is problematic.
-
-*** TODO NOTYET, should become a dblock
-"""
-    enumRes = None
-    try:
-        #print "{0}.{1}".format(enumTypeStr, enumValueStr)
-        exec("enumRes = {0}.{1}".format(enumTypeStr, enumValueStr))
-    except AttributeError:
-        b_io.tm.here(enumValueStr)
-        return None
-    else:
-        #print  enumRes
-        return enumRes
-
-
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Envelope Address Specification*
-"""
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  envelopeAddrSet    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "envelopeAddrSet" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /envelopeAddrSet/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def envelopeAddrSet(
+####+END:
         msg,
         mailBoxAddr,
-):
-    """
-** Set the msg's envelope address to mailBoxAddr, but only if it had not been previously set.
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set the msg's envelope address to mailBoxAddr, but only if it had not been previously set.
 This will be used for delivery-reports and non-delivery-reports.
-"""
+    #+end_org """
+
     if not 'X-B-Envelope-Addr' in msg:
         if mailBoxAddr:
             msg['X-B-Envelope-Addr'] = mailBoxAddr
 
     return
 
+####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep nil :title "Delivery Status Notification And Disposition Report Requests" :anchor "" :extraInfo ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*     [[elisp:(outline-show-subtree+toggle)][| _Delivery Status Notification And Disposition Report Requests_: |]]    [[elisp:(org-shifttab)][<)]] E|
+#+end_org """
+####+END
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Delivery Status Notification And Disposition Report Requests*
-"""
-
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  dispositionNotificationRequetsForTo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "dispositionNotificationRequetsForTo" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /dispositionNotificationRequetsForTo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def dispositionNotificationRequetsForTo(
+####+END:
         msg,
         recipientsList=None,
         notifyTo=None,
-):
-    """
-** Request Receipt-Nofications for each of recipientsList. Notifications are to be sent to notifyTo address.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Request Receipt-Nofications for each of recipientsList. Notifications are to be sent to notifyTo address.
+    #+end_org """
     if recipientsList:
         msg['BX-Disposition-Notification-Req-For'] = ", ".join(recipientsList)
 

@@ -236,6 +236,8 @@ class examples(cs.Cmnd):
 
         qmailOrAcct.examples_csu(qmailAcct="alias", qmailAddr="postmaster", sectionTitle="default")
 
+        marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
+
         # marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
 
         b.niche.examplesNicheRun("usageEnvs")
