@@ -87,6 +87,7 @@ import collections
 
 from bisos.bpo import bpo
 from bisos.bpo import bpoFpsCls
+from bisos.common import csParam
 
 import pathlib
 import os
@@ -113,6 +114,7 @@ def examples_csu(
 ####+END:
         bpoId: str,
         envRelPath: str,
+        aasMarmeeBase: str,
         sectionTitle: typing.AnyStr = '',
 ) -> None:
     """ #+begin_org
@@ -124,17 +126,21 @@ def examples_csu(
 
     cs.examples.menuChapter('OutMail FileParams Access And Management*')
 
-    icmWrapper = ""
-    cmndName = "marmeeAasOutMail_fps"
+    cmndName = "marmeeAasOutMail_fps" ; icmWrapper = ""
     cps = cpsInit() ; cps['bpoId'] = bpoId ; cps['envRelPath'] = envRelPath
     cmndArgs = "list" ;
     cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none', icmWrapper=icmWrapper)
 
-    icmWrapper = ""
-    cmndName = "marmeeAasOutMail_fps"
+    cmndName = "marmeeAasOutMail_fps" ; icmWrapper = ""
     cps = cpsInit() ; cps['bpoId'] = bpoId ; cps['envRelPath'] = envRelPath
     cmndArgs = "menu" ;
     cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none', icmWrapper=icmWrapper)
+
+    cmndName = "marmeeAasOutMailAddrLocate" ; icmWrapper = ""
+    cps = cpsInit() ; cps['aasMarmeeBase'] = aasMarmeeBase
+    cmndArgs = "bisos.ex1@example.com" ;
+    cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none', icmWrapper=icmWrapper)
+
 
 ####+BEGIN: b:py3:cs:func/args :funcName "commonParamsSpecify" :comment "" :funcType "FmWrk" :retType "Void" :deco "" :argsList "csParams"
 """ #+begin_org
@@ -427,6 +433,113 @@ class marmeeAasOutMail_fps(cs.Cmnd):
 
         return cmndArgsSpecDict
 
+
+####+BEGIN: b:py3:cs:func/typing :funcName "marmeeAasOutMailAddrFind" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /marmeeAasOutMailAddrFind/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def marmeeAasOutMailAddrFind(
+####+END:
+        aasMarmeeBase: str,
+        emailAddr: str,
+) -> tuple[str, str]:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Find =emailAddr= in =aasMarmeeBase=
+    #+end_org """
+
+    def foundThere(bpoId, envRelPath, emailAddr):
+        result = False
+        outMailFps = b.pattern.sameInstance(
+            AasOutMail_FPs,
+            bpoId=bpoId,
+            envRelPath=envRelPath,
+        )
+        userName = outMailFps.fps_getParam('outMail_userName').parValueGet()
+        if userName == emailAddr:
+            result = True
+        return result
+
+    bpoId = bpo.givenPathObtainBpoId(aasMarmeeBase)
+    baseRelPath = pathlib.Path(bpo.givenPathObtainRelPath(aasMarmeeBase))
+
+    result_bpoId = ""
+    result_envRelPath = ""
+
+    aasMarmeeBasePath = pathlib.Path(aasMarmeeBase)
+    for eachProv in aasMarmeeBasePath.iterdir():
+        if eachProv.is_dir():
+            svcProvBase = aasMarmeeBasePath.joinpath(eachProv)
+            svcProvRelPath = baseRelPath.joinpath(eachProv.name)
+            for eachInst in svcProvBase.iterdir():
+                #print(eachInst)
+                envRelPath = str(svcProvRelPath.joinpath(eachInst.name))
+                if foundThere(bpoId, envRelPath, emailAddr):
+                    result_bpoId = bpoId
+                    result_envRelPath = envRelPath
+
+    return result_bpoId, result_envRelPath
+
+
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "marmeeAasOutMailAddrLocate" :comment "" :extent "verify" :parsMand "aasMarmeeBase" :parsOpt "" :argsMin 1 :argsMax 1 :pyInv ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<marmeeAasOutMailAddrLocate>>  =verify= parsMand=aasMarmeeBase argsMin=1 argsMax=1 ro=cli   [[elisp:(org-cycle)][| ]]
+#+end_org """
+class marmeeAasOutMailAddrLocate(cs.Cmnd):
+    cmndParamsMandatory = [ 'aasMarmeeBase', ]
+    cmndParamsOptional = [ ]
+    cmndArgsLen = {'Min': 1, 'Max': 1,}
+
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmnd(self,
+             rtInv: cs.RtInvoker,
+             cmndOutcome: b.op.Outcome,
+             aasMarmeeBase: typing.Optional[str]=None,  # Cs Mandatory Param
+             argsList: typing.Optional[list[str]]=None,  # CsArgs
+    ) -> b.op.Outcome:
+
+        callParamsDict = {'aasMarmeeBase': aasMarmeeBase, }
+        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, argsList).isProblematic():
+            return b_io.eh.badOutcome(cmndOutcome)
+        cmndArgsSpecDict = self.cmndArgsSpec()
+        aasMarmeeBase = csParam.mappedValue('aasMarmeeBase', aasMarmeeBase)
+####+END:
+        self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]
+        #+end_org """)
+
+        cmndArgsSpecDict = self.cmndArgsSpec()
+        emailAddr = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
+
+        result_bpoId, result_envRelPath = marmeeAasOutMailAddrFind(aasMarmeeBase, emailAddr)
+
+        print(f"{result_bpoId} {result_envRelPath}")
+
+        return cmndOutcome.set(
+            opError=b.OpError.Success,
+            opResults=True,
+        )
+
+####+BEGIN: b:py3:cs:method/args :methodName "cmndArgsSpec" :methodType "anyOrNone" :retType "bool" :deco "default" :argsList "self"
+    """ #+begin_org
+**  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Mtd-T-anyOrNone [[elisp:(outline-show-subtree+toggle)][||]] /cmndArgsSpec/ deco=default  deco=default   [[elisp:(org-cycle)][| ]]
+    #+end_org """
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmndArgsSpec(self, ):
+####+END:
+        """  #+begin_org
+** [[elisp:(org-cycle)][| *cmndArgsSpec:* | ]]
+        #+end_org """
+
+        cmndArgsSpecDict = cs.arg.CmndArgsSpecDict()
+        cmndArgsSpecDict.argsDictAdd(
+            argPosition="0",
+            argName="emailAddr",
+            argChoices=[],
+            argDescription="Email Address"
+        )
+
+        return cmndArgsSpecDict
 
 
 ####+BEGIN: b:py3:cs:framework/endOfFile :basedOn "classification"

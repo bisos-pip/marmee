@@ -162,6 +162,21 @@ def commonParamsSpecify(
     AasMail_FPs.fps_asCsParamsAdd(csParams,)
 
 
+####+BEGIN: b:py3:cs:func/typing :funcName "marmeeBaseForUsageAcct" :funcType "extTyp" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyp [[elisp:(outline-show-subtree+toggle)][||]] /marmeeBaseForUsageAcct/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def marmeeBaseForUsageAcct(
+####+END:
+        usgLoginAcct: str,
+) -> str:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Has Not Been Implemented Yet
+    #+end_org """
+    return os.path.realpath("~{usgLoginAcct}/bpos/usageEnvs/fullUse/aas/marmee")
+
+
 ####+BEGIN: bx:dblock:python:class :className "AasMail_FPs" :superClass "bpoFpsCls.BpoFpsCls" :comment "" :classType "basic"
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Cls-basic  [[elisp:(outline-show-subtree+toggle)][||]] /AasMail_FPs/ bpoFpsCls.BpoFpsCls  [[elisp:(org-cycle)][| ]]

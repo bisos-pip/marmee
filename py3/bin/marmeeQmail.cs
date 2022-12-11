@@ -113,19 +113,19 @@ from bisos.currents import currentsConfig
    "bisos.marmee.aasInMailFps"
    "bisos.marmee.aasOutMailFps"
    "bisos.marmee.aasMailFps"
-   "bisos.marmee.marmeeQmail"
+   ;; "bisos.marmee.marmeeQmail"
    "bisos.qmail.maildir"
    "bisos.qmail.maildrop"
    "bisos.qmail.qmailOrAcct"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.marmeeQmail | bisos.qmail.maildir | bisos.qmail.maildrop | bisos.qmail.qmailOrAcct |
+| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.qmail.maildir | bisos.qmail.maildrop | bisos.qmail.qmailOrAcct |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /13/ in csuList pyImports=t csuImports=t csuParams=t
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /12/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
 
 from bisos.b.cs import ro
@@ -137,13 +137,12 @@ from bisos.b import clsMethod_csu
 from bisos.marmee import aasInMailFps
 from bisos.marmee import aasOutMailFps
 from bisos.marmee import aasMailFps
-from bisos.marmee import marmeeQmail
 from bisos.qmail import maildir
 from bisos.qmail import maildrop
 from bisos.qmail import qmailOrAcct
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.marmeeQmail', 'bisos.qmail.maildir', 'bisos.qmail.maildrop', 'bisos.qmail.qmailOrAcct', ]
+csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.qmail.maildir', 'bisos.qmail.maildrop', 'bisos.qmail.qmailOrAcct', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -228,15 +227,13 @@ class examples(cs.Cmnd):
 
         cur_marmeeEnvRelPath = f"aas/marmee/qmail/alias"
 
-        marmeeQmail.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
+        # marmeeQmail.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
 
         maildir.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
 
         maildrop.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
 
         qmailOrAcct.examples_csu(qmailAcct="alias", qmailAddr="postmaster", sectionTitle="default")
-
-        marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
 
         # marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
 

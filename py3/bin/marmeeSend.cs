@@ -118,11 +118,11 @@ def cmndParsCurBxoSr(cps): cps['bxoId'] = curGet_bxoId(); cps['sr'] = curGet_sr(
   (list
    "bisos.b.cs.ro"
    "blee.icmPlayer.bleep"
-   "bisos.marmee.marmeeSendLib"
+   "bisos.marmee.marmeeSend"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.marmee.marmeeSendLib |
+| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.marmee.marmeeSend |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -132,10 +132,10 @@ def cmndParsCurBxoSr(cps): cps['bxoId'] = curGet_bxoId(); cps['sr'] = curGet_sr(
 
 from bisos.b.cs import ro
 from blee.icmPlayer import bleep
-from bisos.marmee import marmeeSendLib
+from bisos.marmee import marmeeSend
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.marmee.marmeeSendLib', ]
+csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.marmee.marmeeSend', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -159,80 +159,11 @@ def g_extraParams():
 ####+END:
 
 
-####+BEGIN: bx:cs:python:func :funcName "g_argsExtraSpecify" :comment "FrameWrk: ArgsSpec" :funcType "FrameWrk" :retType "Void" :deco "" :argsList "parser"
+####+BEGIN: bx:icm:py3:section :title "CS-Commands"
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-FrameWrk [[elisp:(outline-show-subtree+toggle)][||]] /g_argsExtraSpecify/ =FrameWrk: ArgsSpec= retType=Void argsList=(parser)  [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  /Section/    [[elisp:(outline-show-subtree+toggle)][||]] *CS-Commands*  [[elisp:(org-cycle)][| ]]
 #+end_org """
-def g_argsExtraSpecify(
-    parser,
-):
 ####+END:
-    """Module Specific Command Line Parameters.
-    g_argsExtraSpecify is passed to G_main and is executed before argsSetup (can not be decorated)
-    """
-    G = cs.globalContext.get()
-    csParams = cs.CmndParamDict()
-
-    marmeAcctsLib.commonParamsSpecify(csParams)
-
-    csParams.parDictAdd(
-        parName='moduleVersion',
-        parDescription="Module Version",
-        parDataType=None,
-        parDefault=None,
-        parChoices=list(),
-        parScope=cs.CmndParamScope.TargetParam,
-        argparseShortOpt=None,
-        argparseLongOpt='--version',
-    )
-
-
-    csParams.parDictAdd(
-        parName='inFile',
-        parDescription="Input File",
-        parDataType=None,
-        # ../control/outMail/common/template/bynameUtf8.mail
-        parDefault=os.path.join(
-            marmeAcctsLib.outMailCommonDirGet(marmeAcctsLib.enabledControlProfileObtain(curGet_bxoId(), curGet_sr())),
-            "template/bynameUtf8.mail"
-        ),
-        parChoices=["someFile", "UserInput"],
-        parScope=cs.CmndParamScope.TargetParam,
-        argparseShortOpt=None,
-        argparseLongOpt='--inFile',
-        )
-
-    csParams.parDictAdd(
-        parName='fromLine',
-        parDescription="From Line",
-        parDataType=None,
-        parDefault="someFrom@example.com",
-        parChoices=["from@example.com", "UserInput"],
-        parScope=cs.CmndParamScope.TargetParam,
-        argparseShortOpt=None,
-        argparseLongOpt='--fromLine',
-        )
-
-    csParams.parDictAdd(
-        parName='toLine',
-        parDescription="To Line",
-        parDataType=None,
-        parDefault="someTo@example.com",
-        parChoices=["to@example.com", "UserInput"],
-        parScope=cs.CmndParamScope.TargetParam,
-        argparseShortOpt=None,
-        argparseLongOpt='--toLine',
-    )
-
-    bleep.commonParamsSpecify(csParams)
-
-    cs.argsparseBasedOnCsParams(parser, csParams)
-
-    # So that it can be processed later as well.
-    G.icmParamDictSet(csParams)
-
-    return
-
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :modPrefix "new" :cmndName "examples" :cmndType "ICM-Cmnd-FWrk"  :comment "FrameWrk: ICM Examples" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
@@ -271,167 +202,13 @@ class examples(cs.Cmnd):
 **  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Examples   ::  Default Mail From Complete File [[elisp:(org-cycle)][| ]]
 """
 
-        enabledControlProfile = "" # marmeAcctsLib.enabledControlProfileObtain(curGet_bxoId(), curGet_sr())
-        enabledOutMailAcct = "" # marmeAcctsLib.enabledOutMailAcctObtain(curGet_bxoId(), curGet_sr())
+        fromLine = "mohsen.byname@gmail.com"
+        toLine = fromLine
+        marmeeSend.examples_csu(fromLine, toLine, sectionTitle="default")
 
-        #enabledControlProfile = marmeAcctsLib.enabledControlProfileObtain()
-        #enabledOutMailAcct = marmeAcctsLib.enabledOutMailAcctObtain()
-
-        cs.examples.menuChapter("""*Mail From Complete File -- Default ControlProfile={controlProfile} Acct={mailAcct}*""".format(
-                controlProfile=enabledControlProfile, mailAcct=enabledOutMailAcct,))
-
-        cmndName = "sendCompleteMessage" ; cmndArgs = "" ;
-
-        cs.examples.menuSection("""*Mail File fromValid/toValid -- Default ControlProfile={controlProfile} Acct={mailAcct}*""".format(
-                controlProfile=enabledControlProfile, mailAcct=enabledOutMailAcct))
-
-        inFileExample = '''fileName'''
-
-        # inFileExample = '''{fileName}'''.format(
-        #     fileName=os.path.join(marmeAcctsLib.outMailCommonDirGet(
-        #         enabledControlProfile,
-        #         curGet_bxoId(),
-        #         curGet_sr(),
-        #         ),
-        #         "template/plain/fromValid/toValid/default.mail")
-        #     )
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['runMode'] = "runDebug" ; cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='little')
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['runMode'] = "runDebug" ; cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, icmWrapper="echo", verbosity='little')
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['runMode'] = "dryRun" ; cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='little')
-
-        cs.examples.menuSection("""*Mail File fromValid/toBad -- Default ControlProfile={controlProfile} Acct={mailAcct}*""".format(
-                controlProfile=enabledControlProfile, mailAcct=enabledOutMailAcct,))
-
-        inFileExample = '''fileName'''
-
-        # inFileExample = '''{fileName}'''.format(
-        #     fileName=os.path.join(marmeAcctsLib.outMailCommonDirGet(
-        #         enabledControlProfile,
-        #         curGet_bxoId(),
-        #         curGet_sr(),
-        #         ),
-        #         "template/plain/fromValid/toBad/default.mail"))
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['runMode'] = "runDebug" ; cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='little')
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['runMode'] = "runDebug" ; cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, icmWrapper="echo", verbosity='little')
-
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['runMode'] = "dryRun" ; cps['inFile'] = inFileExample
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='little')
-
-        """
-**  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Examples   ::  Mail From Partial File -- Qmail Inject [[elisp:(org-cycle)][| ]]
-"""
-
-        cs.examples.menuChapter('*Mail From Partial File -- Qmail Inject*')
-
-        inFileExample = """NOTYET"""
-
-        # inFileExample = '''{fileName}'''.format(
-        #     fileName=os.path.join(
-        #         marmeAcctsLib.outMailCommonDirGet(
-        #             enabledControlProfile,
-        #             curGet_bxoId(),
-        #             curGet_sr(),
-        #             ),
-        #         "template/bynameUtf8.mail"
-        #     ))
-
-        cmndName = "sendFromPartialFileWithPars" ; cmndArgs = "" ; cps = collections.OrderedDict()
-        cps['submissionMethod'] = "inject" ; cps['inFile'] = inFileExample
-        cps['runMode']="dryRun"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        """
-**  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Examples   ::  Basic Mail Sending  [[elisp:(org-cycle)][| ]]
-"""
-
-
-        cs.examples.menuChapter('*Basic Mail Sending*')
-
-        cmndName = "msgSend_basic" ; cmndArgs = ""
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['fromLine']="office@mohsen.1.banan.byname.net" ; cps['toLine']="test@mohsen.banan.1.byname.net"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        cmndName = "msgSend_basic" ; cmndArgs = ""
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['verbosity']="20" ; cps['runMode']="runDebug"
-        cps['fromLine']="office@mohsen.1.banan.byname.net" ; cps['toLine']="test@mohsen.banan.1.byname.net"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        cmndName = "msgSend_basic" ; cmndArgs = ""
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['verbosity']="20" ; cps['runMode']="dryRun"
-        cps['fromLine']="office@mohsen.1.banan.byname.net" ; cps['toLine']="test@mohsen.banan.1.byname.net"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-
-        cmndName = "msgSend_tracked" ; cmndArgs = ""
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['fromLine']="office@mohsen.1.banan.byname.net" ; cps['toLine']="test@mohsen.banan.1.byname.net"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        cmndName = "msgSend_tracked" ; cmndArgs = ""
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['verbosity']="20" ; cps['runMode']="runDebug"
-        cps['fromLine']="office@mohsen.1.banan.byname.net" ; cps['toLine']="test@mohsen.banan.1.byname.net"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-        cmndName = "msgSend_tracked" ; cmndArgs = ""
-        cps = collections.OrderedDict() ; cmndParsCurBxoSr(cps)
-        cps['verbosity']="20" ; cps['runMode']="dryRun"
-        cps['fromLine']="office@mohsen.1.banan.byname.net" ; cps['toLine']="test@mohsen.banan.1.byname.net"
-        cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='none')
-
-
-
-        """
-**  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Examples   ::  From  marmeAcctsLib.py   [[elisp:(org-cycle)][| ]]
-"""
-
-        #marmeAcctsLib.examples_controlProfileManage()
-
-        #marmeAcctsLib.examples_enabledOutMailAcctConfig()
-
-        #marmeAcctsLib.examples_outMailAcctAccessPars()
+        b.niche.examplesNicheRun("usageEnvs")
 
         return(cmndOutcome)
-
-
-####+BEGIN: bx:cs:python:section :title "ICM Commands"
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ############## [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(delete-other-windows)][(1)]]    *ICM Commands*  [[elisp:(org-cycle)][| ]]  [[elisp:(org-show-subtree)][|=]]
-"""
-####+END:
-
-
-
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Support Functions For MsgProcs*
-"""
 
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "sendFromPartialFileWithPars" :comment "" :parsMand "" :parsOpt "outMailAcct inFile sendingMethod" :argsMin 0 :argsMax 0 :pyInv "msg"
@@ -457,6 +234,11 @@ class sendFromPartialFileWithPars(cs.Cmnd):
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
             return b_io.eh.badOutcome(cmndOutcome)
 ####+END:
+        self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Submit a message using inFile and pars: outMailAcct, submissionMethod.
+        Augment with delivery/non-delivery requests and track.
+        #+end_org """)
+
         G = cs.globalContext.get()
 
         if not msg:
@@ -525,11 +307,6 @@ class sendFromPartialFileWithPars(cs.Cmnd):
 
         return cmndOutcome
 
-    def cmndDocStr(self): return """
-** Submit a message using inFile and pars: outMailAcct, submissionMethod.
-** Augment with delivery/non-delivery requests and track.
-"""
-
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "msgSend_basic" :comment "" :parsMand "bxoId sr fromLine toLine" :parsOpt "sendingMethod" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
@@ -555,6 +332,9 @@ class msgSend_basic(cs.Cmnd):
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
             return b_io.eh.badOutcome(cmndOutcome)
 ####+END:
+        self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]
+        #+end_org """)
 
         if not sendingMethod:
             sendingMethod = msgOut.SendingMethod.submit
@@ -640,6 +420,10 @@ class msgSend_tracked(cs.Cmnd):
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
             return b_io.eh.badOutcome(cmndOutcome)
 ####+END:
+        self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]
+        #+end_org """)
+
         #G = cs.globalContext.get()
 
         if not sendingMethod:
@@ -764,42 +548,6 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
         )
 
         return
-
-
-####+BEGIN: bx:icm:py3:section :title "CS-Commands"
-""" #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  /Section/    [[elisp:(outline-show-subtree+toggle)][||]] *CS-Commands*  [[elisp:(org-cycle)][| ]]
-#+end_org """
-####+END:
-
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "someCmnd" :comment "" :extent "verify" :ro "cli" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 0 :pyInv ""
-""" #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<someCmnd>>  =verify= ro=cli   [[elisp:(org-cycle)][| ]]
-#+end_org """
-class someCmnd(cs.Cmnd):
-    cmndParamsMandatory = [ ]
-    cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 0, 'Max': 0,}
-
-    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
-    def cmnd(self,
-             rtInv: cs.RtInvoker,
-             cmndOutcome: b.op.Outcome,
-    ) -> b.op.Outcome:
-
-        callParamsDict = {}
-        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
-####+END:
-        self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  A starting point command.
-        #+end_org """)
-
-        if b.subProc.WOpW(invedBy=self, log=1).bash(
-                f"""echo hello World""",
-        ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
-
-        return(cmndOutcome)
 
 ####+BEGIN: blee:bxPanel:foldingSection :outLevel 0 :sep nil :title "Main" :anchor ""  :extraInfo "Framework Dblock"
 """ #+begin_org

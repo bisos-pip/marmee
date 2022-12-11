@@ -177,6 +177,8 @@ import copy
 import email
 import smtplib
 
+import enum
+
 ####+BEGIN: b:py3:cs:orgItem/basic :type "=Facility=  " :title "*Common Facilities*" :comment ""
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =Facility=   [[elisp:(outline-show-subtree+toggle)][||]] *Common Facilities*   [[elisp:(org-cycle)][| ]]
@@ -232,32 +234,35 @@ def dispositionNotificationRequetsForTo(
 
     return
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  dispositionNotificationRequetsPerRecipient    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "dispositionNotificationRequetsPerRecipient" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /dispositionNotificationRequetsPerRecipient/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def dispositionNotificationRequetsPerRecipient(
+####+END:
         msg,
         perRecipientsList=None,
-):
-    """
-** Place Holder.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Place Holder.
+    #+end_org """
     return
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  deliveryNotificationRequetsForTo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "deliveryNotificationRequetsForTo" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /deliveryNotificationRequetsForTo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def deliveryNotificationRequetsForTo(
+####+END:
         msg,
         recipientsList=None,
         notifyTo=None,
-):
-    """
-** Request Delivery-Reports for each of recipientsList. Notifications are to be sent to notifyTo address.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Request Delivery-Reports for each of recipientsList. Notifications are to be sent to notifyTo address.
+    #+end_org """
     if recipientsList:
         msg['BX-Delivery-Notification-Req-For'] = ", ".join(recipientsList)
 
@@ -266,32 +271,36 @@ def deliveryNotificationRequetsForTo(
 
     return
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  deliveryNotificationRequetsPerRecipient    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+
+####+BEGIN: b:py3:cs:func/typing :funcName "deliveryNotificationRequetsPerRecipient" :funcType "extTyped" :deco "track" :comment "Place Holder"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /deliveryNotificationRequetsPerRecipient/  Place Holder deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def deliveryNotificationRequetsPerRecipient(
+####+END:
         msg,
         perRecipientsList=None,
-):
-    """
-** Place Holder.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Place Holder
+    #+end_org """
     return
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  nonDeliveryNotificationRequetsForTo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "nonDeliveryNotificationRequetsForTo" :funcType "extTyped" :deco "track" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /nonDeliveryNotificationRequetsForTo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def nonDeliveryNotificationRequetsForTo(
+####+END:
         msg,
         recipientsList=None,
         notifyTo=None,
-):
-    """
-** Request Non-Delivery-Reports for each of recipientsList. Notifications are to be sent to notifyTo address.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Request Non-Delivery-Reports for each of recipientsList. Notifications are to be sent to notifyTo address.
+    #+end_org """
     if recipientsList:
         msg['BX-Non-Delivery-Notification-Req-For'] = ", ".join(recipientsList)
 
@@ -301,81 +310,92 @@ def nonDeliveryNotificationRequetsForTo(
     return
 
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  nonDeliveryNotificationRequetsPerRecipient    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "nonDeliveryNotificationRequetsPerRecipient" :funcType "extTyped" :deco "track" :comment "Place Holder"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /nonDeliveryNotificationRequetsPerRecipient/  Place Holder deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def nonDeliveryNotificationRequetsPerRecipient(
+####+END:
         msg,
         perRecipientsList=None,
-):
-    """
-** Place Holder.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Place Holder
+    #+end_org """
     return
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  nonDeliveryNotificationActions    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "nonDeliveryNotificationActions" :funcType "extTyped" :deco "track" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /nonDeliveryNotificationActions/  Place Holder deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def nonDeliveryNotificationActions(
+####+END:
         msg,
         coRecipientsList=None,
-):
-    """
-** Based on action and address, process the Non-Delivery-Notification and notify each of coRecipientsList.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Based on action and address, process the Non-Delivery-Notification and notify each of coRecipientsList.
+    #+end_org """
+
     if coRecipientsList:
         msg['X-B-Non-Delivery-Notification-Actions'] = ", ".join(coRecipientsList)
 
     return
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  crossRefInfo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "crossRefInfo" :funcType "extTyped" :deco "track" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /crossRefInfo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def crossRefInfo(
+####+END:
         msg,
         crossRefInfo,
-):
-    """
-** Set the crossRefInfo. E.g., X-B-CrossRef: peepid.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set the crossRefInfo. E.g., X-B-CrossRef: someDataBaseId.
+    #+end_org """
     if crossRefInfo:
         msg['X-B-CrossRef'] = crossRefInfo
 
     return
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  dispositionNotificationHeaders    [[elisp:(org-cycle)][| ]]
-"""
+####+BEGIN: b:py3:cs:func/typing :funcName "dispositionNotificationHeaders" :funcType "extTyped" :deco "track" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /dispositionNotificationHeaders/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def dispositionNotificationHeaders(
+####+END:
         msg,
         notifyTo,
-):
-    """
-** Disposition-Notification-To is from RFC-8098 -- Return-Receipt-To is non standard but used.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Disposition-Notification-To is from RFC-8098 -- Return-Receipt-To is non standard but used.
+    #+end_org """
     msg['Disposition-Notification-To'] = notifyTo
     msg['Return-Receipt-To'] = notifyTo
 
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  deliveryNotificationHeaders    [[elisp:(org-cycle)][| ]]
-"""
+####+BEGIN: b:py3:cs:func/typing :funcName "deliveryNotificationHeaders" :funcType "extTyped" :deco "track" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /deliveryNotificationHeaders/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def deliveryNotificationHeaders(
+####+END:
         msg,
         recipientsList,
-):
-    """
-** Notice-Requested-Upon-Delivery-To (NRUDT) as specified in: https://tools.ietf.org/html/draft-bernstein-nrudt-02
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Notice-Requested-Upon-Delivery-To (NRUDT) as specified in: https://tools.ietf.org/html/draft-bernstein-nrudt-02
 NRUDT is supported by the qreceipt program in the qmail package.
 
 This header line can be shared and does not need to have
 its own uniq msg.
-"""
+    #+end_org """
     if recipientsList:
         if 'Notice-Requested-Upon-Delivery-To' in msg:
             b_io.tm.here("Notice-Requested-Upon-Delivery-To -- existed. It has not been updated.")
@@ -383,40 +403,48 @@ its own uniq msg.
             msg['Notice-Requested-Upon-Delivery-To'] = ", ".join(recipientsList)
     return
 
+####+BEGIN: b:py3:cs:orgItem/basic :type "=SendMethod= " :title "*Mail Sending Method Selection -- Injection or Submit*" :comment "General"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =SendMethod=  [[elisp:(outline-show-subtree+toggle)][||]] *Mail Sending Method Selection -- Injection or Submit* General  [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Mail Sending Method Selection -- Injection or Submit*
-"""
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Enum        ::  SendingMethod -- Enum Values: inject, submit, etc [[elisp:(org-cycle)][| ]]
-"""
-SendingMethod = ucf.Enum(
+####+BEGIN: bx:dblock:python:enum :enumName "SendingMethod" :comment "inject or submit"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Enum       [[elisp:(outline-show-subtree+toggle)][||]] /SendingMethod/ =inject or submit=  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@enum.unique
+class SendingMethod(enum.Enum):
+####+END:
     inject='inject',
     submit='submit',
-)
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Enum        ::  SendingRunControl -- Enum Values: fullRun, dryRun, etc [[elisp:(org-cycle)][| ]]
-"""
-SendingRunControl = ucf.Enum(
+####+BEGIN: bx:dblock:python:enum :enumName "SendingRunControl" :comment "Enum Values: fullRun, dryRun, runDebug"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Enum       [[elisp:(outline-show-subtree+toggle)][||]] /SendingRunControl/ =Enum Values: fullRun, dryRun, runDebug=  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@enum.unique
+class SendingRunControl(enum.Enum):
+####+END:
     fullRun='fullRun',
     dryRun='dryRun',
     runDebug='runDebug',
-)
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  sendingMethodSet -- Header Tagging as (inject, submit, etc)   [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+
+####+BEGIN: b:py3:cs:func/typing :funcName "sendingMethodSet" :funcType "extTyped" :deco "track" :comment "sendingMethodSet -- Header Tagging as (inject, submit, etc)"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /sendingMethodSet/  sendingMethodSet -- Header Tagging as (inject, submit, etc) deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def sendingMethodSet(
+####+END:
         msg,
         sendingMethodStr,
-):
-    """
-** Set BX-Sending-Method in X822-MSP.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set BX-Sending-Method in X822-MSP.
+    #+end_org """
     opRes = b.op.Outcome()
     if enumFromStrWhenValid('SendingMethod', sendingMethodStr) == None:
         return icm.eh_problem_usageError_wOp(opRes, sendingMethodStr)
@@ -426,17 +454,18 @@ def sendingMethodSet(
     return opRes
 
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  sendingRunControlSet -- Header Tagging as (dryRun, fullRun)   [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
-def sendingRunControlSet(
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /sendingMethodSet/  sendingMethodSet -- Header Tagging as (inject, submit, etc) deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def sendingMethodSet(
+####+END:
         msg,
         sendingRunControl,
 ):
-    """
-** Set the msg's envelope address to mailBoxAddr. This will be used for delivery-reports and non-delivery-reports.
-"""
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set the msg's envelope address to mailBoxAddr. This will be used for delivery-reports and non-delivery-reports.
+    #+end_org """
     opRes = b.op.Outcome()
     if enumFromStrWhenValid('SendingRunControl', sendingRunControl) == None:
         return (
@@ -446,31 +475,36 @@ def sendingRunControlSet(
     return opRes
 
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Msg Injection (Request Parameters)*
-"""
+####+BEGIN: b:py3:cs:orgItem/basic :type "=injection= " :title "*Msg Injection (Request Parameters)*" :comment "General"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =injection=  [[elisp:(outline-show-subtree+toggle)][||]] *Msg Injection (Request Parameters)* General  [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
-
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Enum        ::  InjectionProgram -- Enum values of qmail, sendmail  [[elisp:(org-cycle)][| ]]
-"""
-InjectionProgram = ucf.Enum(
+####+BEGIN: bx:dblock:python:enum :enumName "InjectionProgram" :comment "Enum values of qmail, qmailBisos, sendmail"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Enum       [[elisp:(outline-show-subtree+toggle)][||]] /InjectionProgram/ =Enum values of qmail, qmailBisos, sendmail=  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@enum.unique
+class InjectionProgram(enum.Enum):
+####+END:
     qmail='qmail',
+    qmailBisos='qmailBisos'
     sendmail='sendmail',
-)
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  injectionProgramSet  -- Injection Program Header Tagging  [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "injectionProgramSet" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /injectionProgramSet/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def injectionProgramSet(
+####+END:
         msg,
         injectionProgram,
 ):
-    """
-** Set the msg's envelope address to mailBoxAddr. This will be used for delivery-reports and non-delivery-reports.
-"""
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set the msg's envelope address to mailBoxAddr. This will be used for delivery-reports and non-delivery-reports.
+    #+end_org """
     opOutcome = b.op.Outcome()
     if enumFromStrWhenValid('InjectionProgram', injectionProgram) == None:
         return (
@@ -479,18 +513,20 @@ def injectionProgramSet(
     msg['BX-Injection-Program'] = injectionProgram
     return opOutcome
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  injectionParams -- Header Tag All Injection Params   [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "injectionParams" :funcType "extTyped" :deco "track" :comment "Header Tag All Injection Params"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /injectionParams/  Header Tag All Injection Params deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def injectionParams(
+####+END:
         msg,
         sendingRunControl=SendingRunControl.fullRun,
         injectionProgram=InjectionProgram.qmail
 ):
-    """
-** Set necessary  injectionParams, to be used by sendBasedOnHeadersInfo.
-"""
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set necessary  injectionParams, to be used by sendBasedOnHeadersInfo.
+    #+end_org """
 
     if sendingMethodSet(msg, SendingMethod.inject).isProblematic():
         return icm.eh_badLastOutcome()
@@ -503,32 +539,38 @@ def injectionParams(
 
     return icm.opSuccess()
 
+####+BEGIN: b:py3:cs:orgItem/basic :type "=Submission= " :title "*Msg Submission (Request Parameters)*" :comment "General"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =Submission=  [[elisp:(outline-show-subtree+toggle)][||]] *Msg Submission (Request Parameters)* General  [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Msg Submission (Request Parameters)*
-"""
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Enum        ::  MtaRemProtocol -- Enum values of: smtp, smtp_ssl, smtp_tls  [[elisp:(org-cycle)][| ]]
-"""
-MtaRemProtocol = ucf.Enum(
+####+BEGIN: bx:dblock:python:enum :enumName "MtaRemProtocol" :comment "Enum values of: smtp, smtp_ssl, smtp_tls"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Enum       [[elisp:(outline-show-subtree+toggle)][||]] /MtaRemProtocol/ =Enum values of: smtp, smtp_ssl, smtp_tls=  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@enum.unique
+class MtaRemProtocol(enum.Enum):
+####+END:
     smtp='smtp',
     smtp_ssl='smtp_ssl',
     smtp_tls='smtp_tls',
-)
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  mtaRemProtocolSet -- Header Tagging mtaRemProtocol  [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "mtaRemProtocolSet" :funcType "extTyped" :deco "track" :comment "Header Tagging mtaRemProtocol"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /mtaRemProtocolSet/  Header Tagging mtaRemProtocol deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def mtaRemProtocolSet(
+####+END:
         msg,
         mtaRemProtocolStr,
 ):
-    """
-** Set the msg's envelope address to mailBoxAddr. This will be used for delivery-reports and non-delivery-reports.
-"""
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Header Tagging mtaRemProtocol
+    #+end_org """
+
     opRes = b.op.Outcome()
     if enumFromStrWhenValid('MtaRemProtocol', mtaRemProtocolStr) == None:
         return (
@@ -537,12 +579,13 @@ def mtaRemProtocolSet(
     msg['BX-MTA-Rem-Protocol'] = mtaRemProtocolStr
     return opRes
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  submitParams    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "submitParams" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /submitParams/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def submitParams(
+####+END:
         msg,
         sendingRunControl=SendingRunControl.fullRun,
         mtaRemProtocol=None,          # smtp
@@ -551,11 +594,10 @@ def submitParams(
         mtaRemUser=None,
         mtaRemPasswd=None,
         mtaRemCerts=None,
-
 ):
-    """
-** Set necessary  injectionParams, to be used by sendBasedOnHeadersInfo. Header Tag All Submit Params.
-"""
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Set necessary  injectionParams, to be used by sendBasedOnHeadersInfo. Header Tag All Submit Params.
+    #+end_org """
 
     if sendingMethodSet(msg, SendingMethod.submit).isProblematic():
         return icm.eh_badLastOutcome()
@@ -587,22 +629,23 @@ def submitParams(
 
     return
 
+####+BEGIN: b:py3:cs:orgItem/basic :type "=Facilities= " :title "*Send Based On Headers*" :comment "General"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =Facilities=  [[elisp:(outline-show-subtree+toggle)][||]] *Send Based On Headers* General  [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
-
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Send Based On Headers*
-"""
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  sendBasedOnHeadersInfo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "sendBasedOnHeadersInfo" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /sendBasedOnHeadersInfo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def sendBasedOnHeadersInfo(
+####+END:
         msg,
 ):
-    """
-** Submit or Inject msg using information contained in the header.
-
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Submit or Inject msg using information contained in the header.
 ** Overview
 
 Dispatch to recipients based on tailored Msg and tailored submission info.
@@ -612,7 +655,7 @@ Processes headers and creates two classes,
 Given a msg and recipients from MsgForRecipient
     - find common options for common recipients
     - Submit based on msg and options
-    """
+    #+end_org """
 
     bx822Set_setMandatoryFields(msg,)
 
@@ -632,22 +675,24 @@ Given a msg and recipients from MsgForRecipient
 
     return opOutcome
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  mailHeadersPipelineClean    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "mailHeadersPipelineClean" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /mailHeadersPipelineClean/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def mailHeadersPipelineClean(
+####+END:
         msg,
 ):
-    """
-** Given a msg, at the end of mailHeadersPipeline cleanup (strip BX-)the headers.
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Given a msg, at the end of mailHeadersPipeline cleanup (strip BX-)the headers.
 
     We want to make sure that msg's header does not contains any extra
     headers that are publicly visible and that are not needed.
 
     The X-B- header lines are public and should not be stripped.
-"""
+
+    #+end_org """
 
     toBeStrippedHeaders = [
         'BX-Non-Delivery-Notification-Req-To',
@@ -665,20 +710,24 @@ def mailHeadersPipelineClean(
 
 
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Inject Based On Headers*
-"""
+####+BEGIN: b:py3:cs:orgItem/basic :type "=inject=" :title "*Inject Based On Headers*" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =inject=   [[elisp:(outline-show-subtree+toggle)][||]] *Inject Based On Headers*   [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  injectBasedOnHeadersInfo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "injectBasedOnHeadersInfo" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /injectBasedOnHeadersInfo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def injectBasedOnHeadersInfo(
-        msg,
-):
-    """
-** Dispatch based on BX-Injection-Program -- sendmail or qmail().
-"""
+####+END:
+        msg: str,
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Dispatch based on BX-Injection-Program -- sendmail or qmail().
+    #+end_org """
 
     if 'BX-Injection-Program' in msg:
         injectionProgram = msg['BX-Injection-Program']
@@ -699,18 +748,18 @@ def injectBasedOnHeadersInfo(
 
     return opOutcome
 
-
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  injectMsgWithQmail    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "injectMsgWithQmail" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /injectMsgWithQmail/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def injectMsgWithQmail(
-        msg,
-):
-    """
-** qmail inject -- NOTYET.
-"""
+####+END:
+        msg: str,
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] qmail inject -- NOTYET.
+    #+end_org """
 
     #b_io.tm.here("qmail Inject \n{msgStr}".format(msgStr=msg.as_string()))
 
@@ -734,33 +783,24 @@ def injectMsgWithQmail(
         opResults=None,
     )
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  injectMsgWithSendmail    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
-def injectMsgWithSendmail(
-        msg,
-):
-    """
-** sendmail inject. NOTYET
-    """
+####+BEGIN: b:py3:cs:orgItem/basic :type "=inject=" :title "*Submit Based On Headers*" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =inject=   [[elisp:(outline-show-subtree+toggle)][||]] *Submit Based On Headers*   [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
 
-
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Submit Based On Headers*
-"""
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  submitBasedOnHeadersInfo    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "submitBasedOnHeadersInfo" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /submitBasedOnHeadersInfo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def submitBasedOnHeadersInfo(
-        msg,
-):
-    """
-** Submit or Inject msg using information contained in the header.
+####+END:
+        msg: str,
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] ** Submit or Inject msg using information contained in the header.
 
 ** Overview
 
@@ -771,7 +811,7 @@ Processes headers and creates two classes,
 Given a msg and recipients from MsgForRecipient
     - find common options for common recipients
     - Submit based on msg and options
-    """
+    #+end_org """
 
     if 'X-B-Envelope-Addr' in msg:
         envelopeAddr = msg['X-B-Envelope-Addr']
@@ -896,17 +936,19 @@ Given a msg and recipients from MsgForRecipient
                 deliveryNotificationRequest=False,
             )
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || FUNC        ::  strLogMessage    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "strLogMessage" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /strLogMessage/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def strLogMessage(
-        headerStr,
-        msg,
-):
-    """
-** Return a string to be used with log_here()
-"""
+####+END:
+        headerStr: str,
+        msg: str,
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Return a string to be used with log_here()
+    #+end_org """
     return (
         "{headerStr}\n{msgStr}".format(
             headerStr=headerStr,
@@ -914,14 +956,18 @@ def strLogMessage(
         )
     )
 
-
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "runningWithDebugOn" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /runningWithDebugOn/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def runningWithDebugOn(
-        msg,
-):
-    """
-** Return True if runMode==dryRun or runMode=runDebug
-"""
+####+END:
+        msg: str,
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]  Return True if runMode==dryRun or runMode=runDebug
+    #+end_org """
     if 'BX-Sending-Run-Control' in msg:
         sendingRunControl = msg['BX-Sending-Run-Control']
     else:
@@ -945,13 +991,18 @@ def runningWithDebugOn(
         b_io.eh.critical_oops("Impossible")
         return True
 
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "runningWithDryrun" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /runningWithDryrun/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def runningWithDryrun(
-        msg,
-):
-    """
-** Return True if runMode==dryRun
-"""
+####+END:
+        msg: str,
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]  Return True if runMode==dryRun
+    #+end_org """
     if 'BX-Sending-Run-Control' in msg:
         sendingRunControl = msg['BX-Sending-Run-Control']
     else:
@@ -976,21 +1027,21 @@ def runningWithDryrun(
         b_io.eh.critical_oops("Impossible")
         return True
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  submitMsgToRecipients    [[elisp:(org-cycle)][| ]]
-"""
-@io.track.subjectToTracking(fnLoc=True, fnEntry=True, fnExit=True)
+####+BEGIN: b:py3:cs:func/typing :funcName "submitMsgToRecipients" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /submitMsgToRecipients/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def submitMsgToRecipients(
-        msg,
+####+END:
+        msg: str,
         recipients,
         deliveryNotificationRequest=False,
-):
-    """
-** Given a msg with needed BX-MTA-Rem headers submit msg to recipients and perhaps request delivery notifications.
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]  Given a msg with needed BX-MTA-Rem headers submit msg to recipients and perhaps request delivery notifications.
+    #+end_org """
 
-Overview
-"""
     b_io.tm.here(strLogMessage(
         "Msg Before Any Header Cleanups", msg,))
 
@@ -1224,23 +1275,25 @@ Overview
             smtpExceptionInfo(e)
             return None
 
+####+BEGIN: b:py3:cs:orgItem/basic :type "=inject=" :title "*Per Recipient Replicated Msg Customization And Management*" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =inject=   [[elisp:(outline-show-subtree+toggle)][||]] *Per Recipient Replicated Msg Customization And Management*   [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Per Recipient Replicated Msg Customization And Management*
-"""
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || CLASS       ::  MsgForRecipient    [[elisp:(org-cycle)][| ]]
-"""
-class MsgForRecipient():
+####+BEGIN: b:py3:class/decl :className "MsgForRecipient" :superClass "object" :comment "ByStar Portable Object -- to be subclassed" :classType "basic"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Cls-basic  [[elisp:(outline-show-subtree+toggle)][||]] /MsgForRecipient/  superClass=object =ByStar Portable Object -- to be subclassed=  [[elisp:(org-cycle)][| ]]
+#+end_org """
+class MsgForRecipient(object):
+####+END:
      """
-** Singleton Class: maintain cross-refs for Msgs customized for Recipients.
+**  Singleton Class: maintain cross-refs for Msgs customized for Recipients.
 
      Every recipient is associated with a Msg.
      msgRecipientsDict[msg] maps to a set of recipients.
-     """
-
+"""
      msgRecipientsDict = dict()         #  msg, recipientAddrList
 
      def __init__(self):
@@ -1282,16 +1335,20 @@ class MsgForRecipient():
                  return eachMsg
          return None
 
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  getMsgWithDispositionNotifyTo    [[elisp:(org-cycle)][| ]]
-"""
+####+BEGIN: b:py3:cs:func/typing :funcName "getMsgWithDispositionNotifyTo" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /getMsgWithDispositionNotifyTo/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def getMsgWithDispositionNotifyTo(
+####+END:
         msgForRecipient,
         notifyTo,
-):
-    """
-** Return msg or None. Find msg for msgForRecipient whose Disposition-Notification-To is notifyTo.
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Return msg or None. Find msg for msgForRecipient whose Disposition-Notification-To is notifyTo.
+    #+end_org """
+
     for msg in msgForRecipient.getAllMsgs():
         if 'Disposition-Notification-To' in msg:
             dispositionNotifyTo = msg['Disposition-Notification-To']
@@ -1299,20 +1356,25 @@ def getMsgWithDispositionNotifyTo(
                 return msg
     return None
 
+####+BEGIN: b:py3:cs:orgItem/basic :type "=bx822=" :title "*Mandatory Bx822 Fields Set*" :comment ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =inject=   [[elisp:(outline-show-subtree+toggle)][||]] *Mandatory Bx822 Fields Set*   [[elisp:(org-cycle)][| ]]
+#+end_org """
+####+END:
 
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ################ [[elisp:(delete-other-windows)][(1)]]      *Mandatory Bx822 Fields Set*
-"""
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || IIF       ::  mandatoryBx822FieldsSet    [[elisp:(org-cycle)][| ]]
-"""
+####+BEGIN: b:py3:cs:func/typing :funcName "bx822Set_setMandatoryFields" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /bx822Set_setMandatoryFields/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def bx822Set_setMandatoryFields(
+####+END:
         msg,
-):
-    """
-** Mail Sending Agent's Final Setups: Date, Message-ID, User-Agent, if needed
-"""
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Mail Sending Agent's Final Setups: Date, Message-ID, User-Agent, if needed
+    #+end_org """
+
     if not 'Date' in msg:
         msg['Date'] = email.utils.formatdate(localtime = 1)
 
@@ -1320,8 +1382,6 @@ def bx822Set_setMandatoryFields(
         msg['Message-ID'] = email.utils.make_msgid()
 
     return None
-
-
 
 
 ####+BEGIN: b:py3:cs:framework/endOfFile :basedOn "classification"
