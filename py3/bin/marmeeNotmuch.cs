@@ -112,6 +112,9 @@ from bisos.bpo import bpoRunBases
 
 from bisos.b.cs import ro
 from blee.icmPlayer import bleep
+from bisos.bpo import bpo
+from bisos.marmee import aasInMailFps
+
 
 csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.aasInMailFps', ]
 

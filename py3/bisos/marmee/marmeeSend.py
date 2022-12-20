@@ -80,6 +80,7 @@ import collections
 ####+END:
 
 from bisos.common import csParam
+from bisos.marmee import x822Out
 
 import sys
 import email
@@ -201,14 +202,11 @@ def examples_csu(
     menuItem(verbosity='none') ; menuItem(verbosity='full')
 
 
-
 ####+BEGIN: bx:dblock:python:section :title "Support Functions For MsgProcs"
 """
 *  [[elisp:(beginning-of-buffer)][Top]] ############## [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(delete-other-windows)][(1)]]    *Support Functions For MsgProcs*  [[elisp:(org-cycle)][| ]]  [[elisp:(org-show-subtree)][|=]]
 """
 ####+END:
-
-
 
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "bisosSendSuppliedMsg" :comment "" :parsMand "fromLine toLine" :parsOpt "inFile" :argsMin 0 :argsMax 0 :pyInv "msg"
@@ -291,14 +289,14 @@ class bisosSendSuppliedMsg(cs.Cmnd):
 
 
 
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "bisosSendProbeMsg" :comment "" :parsMand "fromLine toLine" :parsOpt "inFile" :argsMin 0 :argsMax 0 :pyInv ""
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "bisosSendProbeMsg" :comment "" :parsMand "fromLine toLine" :parsOpt "inFile" :argsMin 1 :argsMax 2 :pyInv ""
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<bisosSendProbeMsg>>  =verify= parsMand=fromLine toLine parsOpt=inFile ro=cli   [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<bisosSendProbeMsg>>  =verify= parsMand=fromLine toLine parsOpt=inFile argsMin=1 argsMax=2 ro=cli   [[elisp:(org-cycle)][| ]]
 #+end_org """
 class bisosSendProbeMsg(cs.Cmnd):
     cmndParamsMandatory = [ 'fromLine', 'toLine', ]
     cmndParamsOptional = [ 'inFile', ]
-    cmndArgsLen = {'Min': 0, 'Max': 0,}
+    cmndArgsLen = {'Min': 1, 'Max': 2,}
 
     @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
     def cmnd(self,
@@ -307,11 +305,13 @@ class bisosSendProbeMsg(cs.Cmnd):
              fromLine: typing.Optional[str]=None,  # Cs Mandatory Param
              toLine: typing.Optional[str]=None,  # Cs Mandatory Param
              inFile: typing.Optional[str]=None,  # Cs Optional Param
+             argsList: typing.Optional[list[str]]=None,  # CsArgs
     ) -> b.op.Outcome:
 
         callParamsDict = {'fromLine': fromLine, 'toLine': toLine, 'inFile': inFile, }
-        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
+        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, argsList).isProblematic():
             return b_io.eh.badOutcome(cmndOutcome)
+        cmndArgsSpecDict = self.cmndArgsSpec()
         fromLine = csParam.mappedValue('fromLine', fromLine)
         toLine = csParam.mappedValue('toLine', toLine)
         inFile = csParam.mappedValue('inFile', inFile)
@@ -354,7 +354,17 @@ Please find example of an attached file\n
 
         msg.attach(part)
 
-        print(msg)
+        cmndArgsSpecDict = self.cmndArgsSpec()
+
+        sendingMethod = self.cmndArgsGet("0", cmndArgsSpecDict, argsList)
+        sendingMethodInfo = self.cmndArgsGet("1", cmndArgsSpecDict, argsList)
+
+        if sendingMethod == x822Out.SendingMethod.inject.value[0]:
+            x822Out.injectMsgWithQmail(msg, sendingMethodInfo)
+        elif sendingMethod == x822Out.SendingMethod.submit:
+            print("NOTYET")
+        else:
+            print(f"NOTYET, bad sending method={sendingMethod}")
 
         return
 
@@ -378,6 +388,34 @@ Please find example of an attached file\n
         )
 
         return cmndOutcome
+
+
+####+BEGIN: b:py3:cs:method/args :methodName "cmndArgsSpec" :methodType "anyOrNone" :retType "bool" :deco "default" :argsList "self"
+    """ #+begin_org
+**  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Mtd-T-anyOrNone [[elisp:(outline-show-subtree+toggle)][||]] /cmndArgsSpec/ deco=default  deco=default   [[elisp:(org-cycle)][| ]]
+    #+end_org """
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmndArgsSpec(self, ):
+####+END:
+        """  #+begin_org
+** [[elisp:(org-cycle)][| *cmndArgsSpec:* | ]]
+        #+end_org """
+
+        cmndArgsSpecDict = cs.arg.CmndArgsSpecDict()
+        cmndArgsSpecDict.argsDictAdd(
+            argPosition="0",
+            argName="sendingMethod",
+            argChoices=['inject', 'submit',],
+            argDescription="Action to be specified by rest"
+        )
+        cmndArgsSpecDict.argsDictAdd(
+            argPosition="1",
+            argName="sendingMethodInfo",
+            argChoices=[],
+            argDescription="Rest of args for use by action"
+        )
+
+        return cmndArgsSpecDict
 
 
 

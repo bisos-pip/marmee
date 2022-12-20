@@ -489,7 +489,9 @@ def sendingMethodSet(
 class InjectionProgram(enum.Enum):
 ####+END:
     qmail='qmail',
-    qmailBisos='qmailBisos'
+    qmailBisos='qmailBisos',
+    qmailRemoteBisos='qmailRemoteBisos',
+    qmailRemote='qmailRemote',
     sendmail='sendmail',
 
 ####+BEGIN: b:py3:cs:func/typing :funcName "injectionProgramSet" :funcType "extTyped" :deco "track"
@@ -702,12 +704,16 @@ def mailHeadersPipelineClean(
         'BX-Delivery-Notification-Req-To',
         'BX-MTA-Injection-Method',
         'BX-MTA-Injection-Control',
+        'X-bpoId',
+        'X-bpoRunEnv',
+        'X-Oauth2-Client-Id',
+        'X-Oauth2-Client-Secret',
+        'X-Oauth2-Refresh-Token',
     ]
 
     for each in toBeStrippedHeaders:
         if each in msg:
             del msg[each]
-
 
 
 ####+BEGIN: b:py3:cs:orgItem/basic :type "=inject=" :title "*Inject Based On Headers*" :comment ""
@@ -748,35 +754,61 @@ def injectBasedOnHeadersInfo(
 
     return opOutcome
 
-####+BEGIN: b:py3:cs:func/typing :funcName "injectMsgWithQmail" :funcType "extTyped" :deco "track"
+####+BEGIN: b:py3:cs:func/typing :funcName "injectMsgWithQmailVariant" :funcType "extTyped" :deco "track"
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /injectMsgWithQmail/  deco=track  [[elisp:(org-cycle)][| ]]
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /injectMsgWithQmailVariant/  deco=track  [[elisp:(org-cycle)][| ]]
 #+end_org """
 @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
-def injectMsgWithQmail(
+def injectMsgWithQmailVariant(
 ####+END:
-        msg: str,
-) -> None:
+        msg,
+        injectionProgram: str=InjectionProgram.qmailBisos.value[0],
+        qmailRemoteArgs: list[str]=[],
+):
     """ #+begin_org
-** [[elisp:(org-cycle)][| *DocStr | ] qmail inject -- NOTYET.
+** [[elisp:(org-cycle)][| *DocStr | ] Should be converted to be an operation
     #+end_org """
 
     #b_io.tm.here("qmail Inject \n{msgStr}".format(msgStr=msg.as_string()))
+    outcome = b.op.Outcome()
 
-    cmndLineOptions=""
-    if icm.icmRunArgs_isRunModeDryRun():
-        cmndLineOptions=" -n"
+    #print(msg)
 
-    commandLine=format("qmail-inject" + cmndLineOptions)
+    injectionProgramArgs = []
 
-    outcome = icm.subProc_bash(
-        commandLine,
+    #print(InjectionProgram.qmailBisos.value[0])
+    if injectionProgram == InjectionProgram.qmailBisos.value[0]:
+        injectionProgramCmnd =  "qmail-inject-bisos.cs"
+        if cs.runArgs.isRunModeDryRun():
+            injectionProgramArgs.append('-n')
+    elif injectionProgram == InjectionProgram.qmail.value[0]:
+        injectionProgramCmnd =  "qmail-inject"
+        if cs.runArgs.isRunModeDryRun():
+            injectionProgramArgs.append('-n')
+    elif injectionProgram == InjectionProgram.qmailRemoteBisos.value[0]:
+        injectionProgramCmnd =  "qmail-remote-bisos.cs"
+        injectionProgramArgs =  qmailRemoteArgs
+    elif injectionProgram == InjectionProgram.qmailRemote.value[0]:
+        injectionProgramCmnd =  "qmail-remote"
+        injectionProgramArgs =  qmailRemoteArgs
+    else:
+        print(f"NOTYET {injectionProgram}")
+        return(b_io.eh.badOutcome(outcome))
+
+    commandLine = injectionProgramCmnd + " " +  " ".join(injectionProgramArgs)
+
+    print(commandLine)
+
+    if b.subProc.Op(outcome=outcome, log=1).bash(
+        f"""{commandLine}""",
         stdin=msg.as_string(),
-    ).log()
-    if outcome.isProblematic(): return(io.eh.badOutcome(outcome))
+    ).isProblematic():
+        print(outcome.stderr)
+        return(b_io.eh.badOutcome(outcome))
 
     #if outcome.stdout: icm.ANN_note("Stdout: " +  outcome.stdout)
     #if outcome.stderr: icm.ANN_note("Stderr: " +  outcome.stderr)
+
 
     return outcome.set(
         opError=b.OpError.Success,

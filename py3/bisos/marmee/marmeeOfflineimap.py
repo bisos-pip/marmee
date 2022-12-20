@@ -384,6 +384,8 @@ nametrans = lambda f: '[Gmail]/' + f if f in ['Drafts', 'Starred', 'Important', 
             folderFilterLineStr = """folderfilter = lambda name: name in [ {foldersListStr} ]""".format(
                 foldersListStr=foldersListStr)
 
+        gmailOauth2.refreshToken_func(bpoId=self.bpoId, envRelPath=self.envRelPath,)
+
         resStr = self.offlineimapRcTemplate("gmail").format(
             inMailAcctMboxesPath=mailDirFullPath,
             imapServer=imapServer,
@@ -535,6 +537,14 @@ def examples_csu(
     cps=cpsInit(); cmndParsCurBpoAndEnvRelPath(cps);
     menuItem(verbosity='none') #; menuItem(verbosity='full')
 
+    cmndName = "offlineimapFolder_delete" ;  cmndArgs = "all"
+    cps=cpsInit(); cmndParsCurBpoAndEnvRelPath(cps);
+    menuItem(verbosity='none') #; menuItem(verbosity='full')
+
+    cmndName = "offlineimapFolder_delete" ;  cmndArgs = "'All Mail'"
+    cps=cpsInit(); cmndParsCurBpoAndEnvRelPath(cps);
+    menuItem(verbosity='none') #; menuItem(verbosity='full')
+
 
 ####+BEGIN: bx:cs:py3:section :title "CS-Params  --- Place Holder, Empty"
 """ #+begin_org
@@ -585,7 +595,6 @@ class offlineimapRcPath(cs.Cmnd):
             opResults=True,
         )
 
-
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "offlineimapMaildirPath" :comment "" :parsMand "bpoId envRelPath" :parsOpt "" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<offlineimapMaildirPath>>  =verify= parsMand=bpoId envRelPath ro=cli   [[elisp:(org-cycle)][| ]]
@@ -610,19 +619,95 @@ class offlineimapMaildirPath(cs.Cmnd):
         envRelPath = csParam.mappedValue('envRelPath', envRelPath)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
-** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  As subProc, runs offlineimap -c offlineimapRcPath.
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Obtaion offlineimapMaildirPath for bpoId+envRelPath
         #+end_org """)
 
         offlineimapInst = Aas_InMail_Offlineimap(bpoId, envRelPath)
-        offlineimapMaildirPath = offlineimapInst.offlineimapMaildirPath()
+        offlineimapMaildirPath = pathlib.Path(offlineimapInst.offlineimapMaildirPath())
 
-        print(offlineimapMaildirPath)
+        if rtInv.outs:
+            b_io.pr(offlineimapMaildirPath)
+
+        cmndOutcome.results = offlineimapMaildirPath
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
-            opResults=True,
         )
 
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "offlineimapFolder_delete" :comment "" :extent "verify" :ro "cli" :parsMand "bpoId envRelPath" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<offlineimapFolder_delete>>  =verify= parsMand=bpoId envRelPath argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
+#+end_org """
+class offlineimapFolder_delete(cs.Cmnd):
+    cmndParamsMandatory = [ 'bpoId', 'envRelPath', ]
+    cmndParamsOptional = [ ]
+    cmndArgsLen = {'Min': 0, 'Max': 9999,}
+
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmnd(self,
+             rtInv: cs.RtInvoker,
+             cmndOutcome: b.op.Outcome,
+             bpoId: typing.Optional[str]=None,  # Cs Mandatory Param
+             envRelPath: typing.Optional[str]=None,  # Cs Mandatory Param
+             argsList: typing.Optional[list[str]]=None,  # CsArgs
+    ) -> b.op.Outcome:
+
+        callParamsDict = {'bpoId': bpoId, 'envRelPath': envRelPath, }
+        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, argsList).isProblematic():
+            return b_io.eh.badOutcome(cmndOutcome)
+        cmndArgsSpecDict = self.cmndArgsSpec()
+        bpoId = csParam.mappedValue('bpoId', bpoId)
+        envRelPath = csParam.mappedValue('envRelPath', envRelPath)
+####+END:
+        if self.cmndDocStr(f""" #+begin_org
+** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  A starting point command.
+        #+end_org """): return(cmndOutcome)
+
+        cmndArgs = self.cmndArgsGet("0&9999", cmndArgsSpecDict, argsList)
+
+        if not (maildirPath := offlineimapMaildirPath(cmndOutcome=cmndOutcome).cmnd(
+                rtInv=cs.RtInvoker.new_py(), cmndOutcome=cmndOutcome,
+                bpoId=bpoId, envRelPath=envRelPath,
+        ).results): return(b_io.eh.badOutcome(cmndOutcome))
+
+        if cmndArgs[0] == "all":
+            b_io.pr(f"processing all -- Not implemented")
+        else:
+            for eachArg in cmndArgs:
+                maildirFolder = maildirPath.joinpath(eachArg)
+                if not maildirFolder.exists():
+                    b_io.tm.here(f"Missing {maildirFolder} --- Skipped")
+                    continue
+                if rtInv.outs:
+                    b_io.pr(f"Executing:  shutil.rmtree({maildirFolder})")
+                shutil.rmtree(maildirFolder)
+
+
+        return cmndOutcome.set(
+            opError=b.OpError.Success,
+            opResults=None,
+        )
+
+####+BEGIN: b:py3:cs:method/typing :methodName "cmndArgsSpec" :methodType "ArgsSpec" :deco "default"
+    """ #+begin_org
+**  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  Mtd-T-ArgsSpec [[elisp:(outline-show-subtree+toggle)][||]] /cmndArgsSpec/ deco=default  deco=default  [[elisp:(org-cycle)][| ]]
+    #+end_org """
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmndArgsSpec(
+####+END:
+            self,
+) -> cs.arg.CmndArgsSpecDict:
+        """ #+begin_org
+*** [[elisp:(org-cycle)][| *cmndArgsSpec:* |]] Command Argument Specifications
+        #+end_org """
+        cmndArgsSpecDict = cs.arg.CmndArgsSpecDict()
+        cmndArgsSpecDict.argsDictAdd(
+            argPosition="0&9999",
+            argName="listToApply",
+            argChoices=[],
+            argDescription="List Of Arguments To Be Applied"
+        )
+        return cmndArgsSpecDict
 
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "offlineimapRun" :comment "" :parsMand "bpoId envRelPath" :parsOpt "" :argsMin 0 :argsMax 0 :pyInv ""
@@ -649,6 +734,14 @@ class offlineimapRun(cs.Cmnd):
         self.cmndDocStr(f""" #+begin_org
 ** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  As subProc, runs offlineimap -c offlineimapRcPath.
         #+end_org """)
+
+
+        if offlineimapRcUpdate(cmndOutcome=cmndOutcome).cmnd(
+                rtInv=rtInv,
+                cmndOutcome=cmndOutcome,
+                bpoId=bpoId,
+                envRelPath=envRelPath,
+        ).isProblematic(): return(b_io.eh.badOutcome(cmndOutcome))
 
         offlineimapInst = Aas_InMail_Offlineimap(bpoId, envRelPath)
         offlineimapRcPath = offlineimapInst.offlineimapRcPath()
@@ -694,11 +787,15 @@ class offlineimapRunAll(cs.Cmnd):
             offlineimapInst = Aas_InMail_Offlineimap(bpoId, envRelPath)
             offlineimapRcPath = offlineimapInst.offlineimapRcPath()
 
-            if not (resStr := b.subProc.WOpW(invedBy=self, log=1).bash(
+            if b.subProc.WOpW(invedBy=self, log=1).bash(
                     f"""offlineimap -c {offlineimapRcPath}""",
-            ).stdout):  return(b_io.eh.badOutcome(cmndOutcome))
+            ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
 
-            print(resStr)
+            # if not (resStr := b.subProc.WOpW(invedBy=self, log=1).bash(
+            #         f"""offlineimap -c {offlineimapRcPath}""",
+            # ).stdout):  return(b_io.eh.badOutcome(cmndOutcome))
+
+            # print(resStr)
 
 
         bpoId = bpo.givenPathObtainBpoId(aasMarmeeBase)

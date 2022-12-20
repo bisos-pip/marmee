@@ -172,9 +172,13 @@ def marmeeBaseForUsageAcct(
         usgLoginAcct: str,
 ) -> str:
     """ #+begin_org
-** [[elisp:(org-cycle)][| *DocStr | ] Has Not Been Implemented Yet
+** [[elisp:(org-cycle)][| *DocStr | ] Needs to go through the bisos.usgAcct pkg.
     #+end_org """
-    return os.path.realpath("~{usgLoginAcct}/bpos/usageEnvs/fullUse/aas/marmee")
+
+    marmeeUsgBase = os.path.expanduser(f"~{usgLoginAcct}/bpos/usageEnvs/fullUse/aas/marmee")
+    marmeeBpoBase = os.path.realpath(marmeeUsgBase)
+
+    return(marmeeBpoBase)
 
 
 ####+BEGIN: bx:dblock:python:class :className "AasMail_FPs" :superClass "bpoFpsCls.BpoFpsCls" :comment "" :classType "basic"

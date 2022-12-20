@@ -12,7 +12,7 @@
 (put 'b:dblockControls 'py3:cs:Classification "cs-u") ; one of cs-mu, cs-u, cs-lib, b-lib, pyLibPure
 #+END_SRC
 #+RESULTS:
-: cs-mu
+: cs-u
 #+end_org """
 ####+END:
 
@@ -77,12 +77,13 @@ Module description comes here.
 
 ####+BEGIN: b:py3:cs:framework/imports :basedOn "classification"
 """ #+begin_org
-** Imports Based On Classification=cs-lib
+** Imports Based On Classification=cs-u
 #+end_org """
 from bisos import b
 from bisos.b import cs
 from bisos.b import b_io
 
+import collections
 ####+END:
 
 import collections

@@ -12,7 +12,7 @@
 (put 'b:dblockControls 'py3:cs:Classification "cs-u") ; one of cs-mu, cs-u, cs-lib, b-lib, pyLibPure
 #+END_SRC
 #+RESULTS:
-: cs-mu
+: cs-u
 #+end_org """
 ####+END:
 
@@ -138,6 +138,7 @@ IMAPFE and pass it as the second argument to the AUTHENTICATE command.
 from bisos import b
 from bisos.b import cs
 from bisos.b import b_io
+from bisos.common import csParam
 
 import collections
 ####+END:
@@ -151,6 +152,7 @@ import pathlib
 # pip install google-api-python-client google-auth-oauthlib
 
 import pickle
+import os
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -198,11 +200,11 @@ def examples_csu(
     execLineEx(f"""python -m pickle {tokenPickleFile} # May run byte-code""")
     execLineEx(f"""rm {tokenPickleFile}""")
 
-    cs.examples.menuSection('*Use Of Token For Outgoing Mail --- SSMTP*')
-    execLineEx("""ls -l ~/sendpyrc""")
+    cs.examples.menuSection('*Credentials Report*')
 
-    cs.examples.menuSection('*Use Of Token For Incoming Mail --- IMAP*')
-    execLineEx("""ls -l ~/.offlineimaprc""")
+    cmndArgs = ""
+    cmndName = "credsReport" ; cps=cpsInit() ; cps['bpoId'] = bpoId ; cps['envRelPath'] = envRelPath
+    menuItem(verbosity='little', comment="# ")
 
     cs.examples.menuChapter('*Refresh Token*')
 
@@ -224,6 +226,25 @@ def commonParamsSpecify(
 ** Based on class's static method.
     """
     AasMail_googleCreds_FPs.fps_asCsParamsAdd(csParams,)
+
+####+BEGIN: b:py3:cs:func/typing :funcName "refreshToken_func" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /refreshToken_func/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def refreshToken_func(
+####+END:
+        bpoId: typing.Optional[str]=None,  # Cs Mandatory Param
+        envRelPath: typing.Optional[str]=None,  # Cs Mandatory Param
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]
+    #+end_org """
+    creds = credsObtain(bpoId, envRelPath)
+    credsFpsUpdate(creds, bpoId, envRelPath,)
+    print(f"{creds.refresh_token}")
+
+
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "refreshToken" :cmndType ""  :comment "" :parsMand "bpoId envRelPath" :parsOpt "" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
@@ -256,9 +277,7 @@ class refreshToken(cs.Cmnd):
 https://stackoverflow.com/questions/51487195/how-can-i-use-python-google-api-without-getting-a-fresh-auth-code-via-browser-ea
 
         """
-        creds = credsObtain(bpoId, envRelPath)
-        credsFpsUpdate(creds, bpoId, envRelPath,)
-        print(f"{creds.refresh_token}")
+        refreshToken_func(bpoId, envRelPath)
 
         cmndOutcome = self.getOpOutcome()
 
@@ -377,12 +396,98 @@ def tokenPickleFilePath(
     return tokenPickleFile
 
 
-####+BEGIN: b:py3:cs:func/typing :funcName "credsObtain" :funcType "eType" :deco "default"
+
+####+BEGIN: b:py3:cs:func/typing :funcName "creds Validity" :funcType "eType" :deco "default"
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-eType  [[elisp:(outline-show-subtree+toggle)][||]] /credsObtain/  deco=default  [[elisp:(org-cycle)][| ]]
 #+end_org """
 @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def credsObtain(
+####+END:
+        bpoId: typing.Optional[str]=None,
+        envRelPath: typing.Optional[str]=None,
+) -> google.oauth2.credentials.Credentials:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr* | ] Returns Credentials. Based on google sample code
+    #+end_org """
+
+    credsJsonFile = credsJsonFilePath(bpoId, envRelPath)
+    tokenPickleFile = tokenPickleFilePath(bpoId, envRelPath)
+
+    creds = None
+
+    def reCreateTokenFile():
+        print(f"creds-BISOS-Path: {bpoId} {envRelPath}")
+        flow = InstalledAppFlow.from_client_secrets_file(
+            credsJsonFile,
+            SCOPES,
+        )
+        creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open(tokenPickleFile, 'wb') as token:
+            pickle.dump(creds, token)
+        return creds
+
+    # The file token.pickle stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists(tokenPickleFile):
+        with open(tokenPickleFile, 'rb') as token:
+            creds = pickle.load(token)
+            # If there are no (valid) credentials available, let the user log in.
+            #
+    else:
+        print(f"Missing tokenPickleFile={tokenPickleFile}. Will Create It For:")
+        creds = reCreateTokenFile()
+        credsReport_func(bpoId, envRelPath)
+        return creds
+
+    if not creds:
+        print(f"not creds PROBLEM")
+        return creds
+
+    print(f"creds.valid={creds.valid}")
+
+    if creds.valid:
+        print(f"Valid Credentials -- creds.valid={creds.valid}")
+        credsReport_func(bpoId, envRelPath)
+        return creds
+
+    if not creds.refresh_token:
+        print(f"Missing creds.refresh_token PROBLEM")
+        credsReport_func(bpoId, envRelPath)
+        return creds
+
+    if creds.valid:
+        print(f"Oops creds.valid should have been False --  PROBLEM")
+        credsReport_func(bpoId, envRelPath)
+        return creds
+
+    if creds.expired:
+        try:
+            print(f"Expired --- Removing tokenPickleFile={tokenPickleFile}.")
+            os.remove(tokenPickleFile)
+        except OSError:
+            print(f"Oops OSError --  PROBLEM")
+            return creds
+        creds = reCreateTokenFile()
+        credsReport_func(bpoId, envRelPath)
+        return creds
+
+    print(f"Will This creds.refresh(Request()) Ever Be Done?")
+
+    creds.refresh(Request())
+
+    return creds
+
+
+
+####+BEGIN: b:py3:cs:func/typing :funcName "credsObtainOriginal" :funcType "eType" :deco "default"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-eType  [[elisp:(outline-show-subtree+toggle)][||]] /credsObtainOriginal/  deco=default  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def credsObtainOriginal(
 ####+END:
         bpoId: typing.Optional[str]=None,
         envRelPath: typing.Optional[str]=None,
@@ -425,6 +530,81 @@ def credsObtain(
             pickle.dump(creds, token)
 
     return creds
+
+
+
+####+BEGIN: b:py3:cs:func/typing :funcName "credsReport_func" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /credsReport_func/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def credsReport_func(
+####+END:
+        bpoId: typing.Optional[str]=None,  # Cs Mandatory Param
+        envRelPath: typing.Optional[str]=None,  # Cs Mandatory Param
+) -> None:
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ]
+    #+end_org """
+
+    credsJsonFile = credsJsonFilePath(bpoId, envRelPath)
+    tokenPickleFile = tokenPickleFilePath(bpoId, envRelPath)
+
+    creds = None
+
+    if os.path.exists(tokenPickleFile):
+        os.system(f'ls -l {tokenPickleFile}')
+        with open(tokenPickleFile, 'rb') as token:
+            creds = pickle.load(token)
+    else:
+        print(f"Missing tokenPickleFile={tokenPickleFile}")
+        return
+
+    if creds:
+        print(creds)
+    else:
+        print(f"Missing creds")
+        return
+
+    print(f"creds.valid={creds.valid}")
+    print(f"creds.expired={creds.expired}")
+    print(f"client_id: {creds.client_id}")
+    print(f"client_secret: {creds.client_secret}")
+    print(f"scopes: {creds.scopes}")
+    print(f"{creds.refresh_token}")
+
+    os.system(f"ls -l {credsJsonFile}")
+
+
+####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "credsReport" :cmndType ""  :comment "" :parsMand "bpoId envRelPath" :parsOpt "" :argsMin 0 :argsMax 0 :pyInv ""
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<credsReport>>  =verify= parsMand=bpoId envRelPath ro=cli   [[elisp:(org-cycle)][| ]]
+#+end_org """
+class credsReport(cs.Cmnd):
+    cmndParamsMandatory = [ 'bpoId', 'envRelPath', ]
+    cmndParamsOptional = [ ]
+    cmndArgsLen = {'Min': 0, 'Max': 0,}
+
+    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+    def cmnd(self,
+             rtInv: cs.RtInvoker,
+             cmndOutcome: b.op.Outcome,
+             bpoId: typing.Optional[str]=None,  # Cs Mandatory Param
+             envRelPath: typing.Optional[str]=None,  # Cs Mandatory Param
+    ) -> b.op.Outcome:
+
+        callParamsDict = {'bpoId': bpoId, 'envRelPath': envRelPath, }
+        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
+            return b_io.eh.badOutcome(cmndOutcome)
+        bpoId = csParam.mappedValue('bpoId', bpoId)
+        envRelPath = csParam.mappedValue('envRelPath', envRelPath)
+####+END:
+        """\
+***** [[elisp:(org-cycle)][| *CmndDesc:* | ]]
+        """
+        credsReport_func(bpoId, envRelPath)
+
+        return(cmndOutcome)
 
 
 ####+BEGIN: bx:dblock:python:class :className "AasMail_googleCreds_FPs" :superClass "bpoFpsCls.BpoFpsCls" :comment "" :classType "basic"
@@ -618,147 +798,6 @@ class AasMail_googleCreds_FPs(bpoFpsCls.BpoFpsCls):
         #)
         #return self.fpsBaseInst
         pass
-
-
-
-
-####+BEGIN: b:py3:cs:func/typing :funcName "refreshTokenObtain_UNUSED" :funcType "eType" :deco "default"
-""" #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-eType  [[elisp:(outline-show-subtree+toggle)][||]] /refreshTokenObtain_UNUSED/  deco=default  [[elisp:(org-cycle)][| ]]
-#+end_org """
-@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
-def refreshTokenObtain_UNUSED(
-####+END:
-        bpoId: typing.Optional[str]=None,
-        envRelPath: typing.Optional[str]=None,
-) -> str:
-    """ #+begin_org
-** [[elisp:(org-cycle)][| *DocStr* | ] Returns a token
-    #+end_org """
-
-    runEnvBases = b.pattern.sameInstance(bpoRunBases.BpoRunEnvBases, bpoId, envRelPath)
-    controlBase = runEnvBases.controlBasePath_obtain()
-
-    credsJsonFile = controlBase.joinpath('mail/credentials.json')
-    tokenPickleFile = controlBase.joinpath('mail/token.pickle')
-    creds = None
-
-    # The file token.pickle stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.path.exists(tokenPickleFile):
-        with open(tokenPickleFile, 'rb') as token:
-            creds = pickle.load(token)
-            # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds:
-            print(f"creds.valid={creds.valid}")
-        if creds and creds.expired and creds.refresh_token:
-            if creds:
-                print(f"creds.expired={creds.expired}")
-                print(f"creds.refresh_token={creds.refresh_token}")
-                creds.refresh(Request())
-                #
-                # if the above fails like below:
-                # google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
-                # remove the token.pickle file and run again
-                #
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                credsJsonFile, SCOPES)
-            creds = flow.run_local_server(port=0)
-            # Save the credentials for the next run
-        with open(tokenPickleFile, 'wb') as token:
-            pickle.dump(creds, token)
-
-    # print(f"{creds}")
-    print(f"{creds.refresh_token}")
-    # print(f"{creds.client_secret}")
-    # print(f"{creds.client_id}")
-    # print(f"{creds.scopes}")
-
-    print(f"{credsJsonFile}")
-
-    return creds.refresh_token
-
-
-
-####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "refreshTokenOrig" :cmndType "" :comment "" :parsMand "" :parsOpt "" :argsMin 0 :argsMax 9999 :pyInv ""
-""" #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CmndSvc-   [[elisp:(outline-show-subtree+toggle)][||]] <<refreshTokenOrig>>  =verify= argsMax=9999 ro=cli   [[elisp:(org-cycle)][| ]]
-#+end_org """
-class refreshTokenOrig(cs.Cmnd):
-    cmndParamsMandatory = [ ]
-    cmndParamsOptional = [ ]
-    cmndArgsLen = {'Min': 0, 'Max': 9999,}
-
-    @cs.track(fnLoc=True, fnEntry=True, fnExit=True)
-    def cmnd(self,
-             rtInv: cs.RtInvoker,
-             cmndOutcome: b.op.Outcome,
-             argsList: typing.Optional[list[str]]=None,  # CsArgs
-    ) -> b.op.Outcome:
-
-        callParamsDict = {}
-        if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, argsList).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
-        cmndArgsSpecDict = self.cmndArgsSpec()
-        ####+END:
-        """\
-        ***** [[elisp:(org-cycle)][| *CmndDesc:* | ]] ICM examples, all on one place.
-        """
-        """Shows basic usage of the PostmasterTools v1beta1 API.
-        Prints the visible domains on user's domain dashboard in https://postmaster.google.com/managedomains.
-
-        Look into this:
-https://stackoverflow.com/questions/51487195/how-can-i-use-python-google-api-without-getting-a-fresh-auth-code-via-browser-ea
-
-        """
-
-        credsJsonFile = os.path.join(os.path.expanduser('~'), 'credentials.json')
-        tokenPickleFile = os.path.join(os.path.expanduser('~'), 'token.pickle')
-        creds = None
-        # The file token.pickle stores the user's access and refresh tokens, and is
-        # created automatically when the authorization flow completes for the first
-        # time.
-        if os.path.exists(tokenPickleFile):
-            with open(tokenPickleFile, 'rb') as token:
-                creds = pickle.load(token)
-        # If there are no (valid) credentials available, let the user log in.
-        if not creds or not creds.valid:
-            if creds:
-                print(f"creds.valid={creds.valid}")
-            if creds and creds.expired and creds.refresh_token:
-                if creds:
-                    print(f"creds.expired={creds.expired}")
-                    print(f"creds.refresh_token={creds.refresh_token}")
-                creds.refresh(Request())
-                #
-                # if the above fails like below:
-                # google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
-                # remove the token.pickle file and run again
-                #
-            else:
-                flow = InstalledAppFlow.from_client_secrets_file(
-                       credsJsonFile, SCOPES)
-                creds = flow.run_local_server(port=0)
-            # Save the credentials for the next run
-            with open(tokenPickleFile, 'wb') as token:
-                pickle.dump(creds, token)
-
-        # print(f"{creds}")
-        print(f"{creds.refresh_token}")
-        # print(f"{creds.client_secret}")
-        # print(f"{creds.client_id}")
-        # print(f"{creds.scopes}")
-
-
-        print(f"{credsJsonFile}")
-
-
-        cmndOutcome = self.getOpOutcome()
-
-        return(cmndOutcome)
 
 
 

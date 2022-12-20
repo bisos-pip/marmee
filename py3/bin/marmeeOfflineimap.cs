@@ -86,7 +86,7 @@ from bisos.b import b_io
 import collections
 ####+END:
 
-from bisos.marmee import aasInOfflineimap
+from bisos.marmee import marmeeOfflineimap
 from bisos.currents import currentsConfig
 
 # from bisos.bpo import bpo
@@ -105,11 +105,11 @@ from bisos.bpo import bpoRunBases
    "bisos.marmee.aasMailFps"
    "bisos.marmee.aasInMailFps"
    "bisos.marmee.gmailOauth2"
-   "bisos.marmee.aasInOfflineimap"
+   "bisos.marmee.marmeeOfflineimap"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.bpo.bpo | bisos.marmee.aasMailFps | bisos.marmee.aasInMailFps | bisos.marmee.gmailOauth2 | bisos.marmee.aasInOfflineimap |
+| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.bpo.bpo | bisos.marmee.aasMailFps | bisos.marmee.aasInMailFps | bisos.marmee.gmailOauth2 | bisos.marmee.marmeeOfflineimap |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -123,10 +123,10 @@ from bisos.bpo import bpo
 from bisos.marmee import aasMailFps
 from bisos.marmee import aasInMailFps
 from bisos.marmee import gmailOauth2
-from bisos.marmee import aasInOfflineimap
+from bisos.marmee import marmeeOfflineimap
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.aasMailFps', 'bisos.marmee.aasInMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.aasInOfflineimap', ]
+csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.aasMailFps', 'bisos.marmee.aasInMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.marmeeOfflineimap', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -201,7 +201,7 @@ class examples(cs.Cmnd):
         # bpoRunBases.examples_bpo_runBases(None, None, sectionTitle="default")
         # bpoRunBases.examples_bpo_runBases(cur_aasMarmee_bpoId, cur_aasMarmee_envRelPath)
 
-        aasInOfflineimap.examples_csu(cur_aasMarmee_bpoId, cur_aasMarmee_envRelPath, cur_aasMarmee_base, sectionTitle="default")
+        marmeeOfflineimap.examples_csu(cur_aasMarmee_bpoId, cur_aasMarmee_envRelPath, cur_aasMarmee_base, sectionTitle="default")
 
         cs.examples.menuChapter('*Service Access Instance*')
 
@@ -238,7 +238,7 @@ class report(cs.Cmnd):
         #+end_org """)
 
         #controlInst = saiInMailControl.Sai_InMail_Control(bpoId, envRelPath)
-        offlineimapInst = aasInOfflineimap.Sai_InMail_Offlineimap(bpoId, envRelPath)
+        offlineimapInst = marmeeOfflineimap.Sai_InMail_Offlineimap(bpoId, envRelPath)
 
 
         offlineimapInst.basesUpdate()

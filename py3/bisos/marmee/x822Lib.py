@@ -83,22 +83,24 @@ import sys
 import email
 
 
-####+BEGIN: bx:dblock:python:subSection :title "Topic SubSection"
-"""
-*  [[elisp:(beginning-of-buffer)][Top]] ================ [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(delete-other-windows)][(1)]]          *Topic SubSection*  [[elisp:(org-cycle)][| ]]  [[elisp:(org-show-subtree)][|=]]
-"""
+####+BEGIN: b:py3:cs:orgItem/basic :type "=Headers= " :title "*Get Headers*" :comment "General"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =Headers=  [[elisp:(outline-show-subtree+toggle)][||]] *Get Headers* General  [[elisp:(org-cycle)][| ]]
+#+end_org """
 ####+END:
 
-
-"""
-*  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Func        ::  msgAllRecipients    [[elisp:(org-cycle)][| ]]
-"""
+####+BEGIN: b:py3:cs:func/typing :funcName "msgAllRecipients" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /msgAllRecipients/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
 def msgAllRecipients(
+####+END:
         msg,
 ):
-    """Given msg, get list of all recipients.
-
-    """
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Given msg, get list of all recipients.
+    #+end_org """
     tos = msg.get_all('to', [])
     ccs = msg.get_all('cc', [])
     bccs = msg.get_all('bcc', [])
@@ -106,6 +108,39 @@ def msgAllRecipients(
     resent_ccs = msg.get_all('resent-cc', [])
     allRecipients = email.utils.getaddresses(tos + ccs + bccs + resent_tos + resent_ccs)
     return allRecipients
+
+####+BEGIN: b:py3:cs:func/typing :funcName "msgAllTos" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /msgAllTos/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def msgAllTos(
+####+END:
+        msg,
+):
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Given msg, get list of all recipients.
+    #+end_org """
+    tos = msg.get_all('to', [])
+    resent_tos = msg.get_all('resent-to', [])
+    #allTos = [x[1] for x in tos + resent_tos]
+    allTos = email.utils.getaddresses(tos + resent_tos)
+    return allTos
+
+####+BEGIN: b:py3:cs:func/typing :funcName "msgSender" :funcType "extTyped" :deco "track"
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  F-T-extTyped [[elisp:(outline-show-subtree+toggle)][||]] /msgSender/  deco=track  [[elisp:(org-cycle)][| ]]
+#+end_org """
+@cs.track(fnLoc=True, fnEntry=True, fnExit=True)
+def msgSender(
+####+END:
+        msg,
+):
+    """ #+begin_org
+** [[elisp:(org-cycle)][| *DocStr | ] Given msg, get list of all recipients.
+    #+end_org """
+    return email.utils.parseaddr(msg["from"])[1]
+
 
 
 
