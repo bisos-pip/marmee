@@ -53,6 +53,7 @@ Module description comes here.
 ** Status: In use with blee3
 ** /[[elisp:(org-cycle)][| Planned Improvements |]]/ :
 *** TODO complete fileName in particulars.
+*** TODO Extract and absorb and communicate https://github.com/gongzhitaao/GnusSolution
 #+end_org """
 
 ####+BEGIN: b:prog:file/orgTopControls :outLevel 1
@@ -231,9 +232,9 @@ nametrans = lambda name: re.sub('^INBOX.', '', name)
 # offlineimaprc for use with gmail -- Taken from:
 # https://github.com/sadsfae/misc-dotfiles/blob/7089bf68ade2f82d4962bd08f040c05ab476e8d6/offlineimaprc-gmail
 [general]
-accounts = MyAccount
+accounts = {thisAccount}
 
-[Account MyAccount]
+[Account {thisAccount}]
 localrepository = LocalIMAP
 remoterepository = RemoteIMAP
 
@@ -387,6 +388,7 @@ nametrans = lambda f: '[Gmail]/' + f if f in ['Drafts', 'Starred', 'Important', 
         gmailOauth2.refreshToken_func(bpoId=self.bpoId, envRelPath=self.envRelPath,)
 
         resStr = self.offlineimapRcTemplate("gmail").format(
+            thisAccount="commonAcctLock",  # Causes UID invalidity when run in parallel thisAccount=userName
             inMailAcctMboxesPath=mailDirFullPath,
             imapServer=imapServer,
             userName=userName,
@@ -671,7 +673,16 @@ class offlineimapFolder_delete(cs.Cmnd):
         ).results): return(b_io.eh.badOutcome(cmndOutcome))
 
         if cmndArgs[0] == "all":
-            b_io.pr(f"processing all -- Not implemented")
+            b_io.pr(f"Removing all Folders")
+            for eachPath in maildirPath.glob("**/*"):
+                if eachPath.is_file():
+                    if rtInv.outs:
+                        b_io.pr(f"Executing:  {eachPath}.unlink()")
+                    eachPath.unlink()
+                elif eachPath.is_dir():
+                    if rtInv.outs:
+                        b_io.pr(f"Executing:  shutil.rmtree({eachPath})")
+                    shutil.rmtree(eachPath)
         else:
             for eachArg in cmndArgs:
                 maildirFolder = maildirPath.joinpath(eachArg)
@@ -681,7 +692,6 @@ class offlineimapFolder_delete(cs.Cmnd):
                 if rtInv.outs:
                     b_io.pr(f"Executing:  shutil.rmtree({maildirFolder})")
                 shutil.rmtree(maildirFolder)
-
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
@@ -735,7 +745,6 @@ class offlineimapRun(cs.Cmnd):
 ** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  As subProc, runs offlineimap -c offlineimapRcPath.
         #+end_org """)
 
-
         if offlineimapRcUpdate(cmndOutcome=cmndOutcome).cmnd(
                 rtInv=rtInv,
                 cmndOutcome=cmndOutcome,
@@ -746,11 +755,13 @@ class offlineimapRun(cs.Cmnd):
         offlineimapInst = Aas_InMail_Offlineimap(bpoId, envRelPath)
         offlineimapRcPath = offlineimapInst.offlineimapRcPath()
 
-        if not (resStr := b.subProc.WOpW(invedBy=self, log=1).bash(
-                f"""offlineimap -c {offlineimapRcPath}""",
-        ).stdout):  return(b_io.eh.badOutcome(cmndOutcome))
+        if not offlineimapRcPath.exists():
+            b_io.pr(f"Missing offlineimapRcPath={offlineimapRcPath} --- offlineimap skipped")
+            return(b_io.eh.badOutcome(cmndOutcome))
 
-        print(resStr)
+        if b.subProc.WOpW(invedBy=self, log=1).bash(
+                f"""offlineimap -c {offlineimapRcPath}""",
+        ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
 
         return cmndOutcome.set(
             opError=b.OpError.Success,
@@ -786,17 +797,12 @@ class offlineimapRunAll(cs.Cmnd):
         def runEach(bpoId, envRelPath):
             offlineimapInst = Aas_InMail_Offlineimap(bpoId, envRelPath)
             offlineimapRcPath = offlineimapInst.offlineimapRcPath()
-
+            if not offlineimapRcPath.exists():
+                b_io.pr(f"Missing offlineimapRcPath={offlineimapRcPath} --- offlineimap skipped")
+                return
             if b.subProc.WOpW(invedBy=self, log=1).bash(
                     f"""offlineimap -c {offlineimapRcPath}""",
             ).isProblematic():  return(b_io.eh.badOutcome(cmndOutcome))
-
-            # if not (resStr := b.subProc.WOpW(invedBy=self, log=1).bash(
-            #         f"""offlineimap -c {offlineimapRcPath}""",
-            # ).stdout):  return(b_io.eh.badOutcome(cmndOutcome))
-
-            # print(resStr)
-
 
         bpoId = bpo.givenPathObtainBpoId(aasMarmeeBase)
         baseRelPath = pathlib.Path(bpo.givenPathObtainRelPath(aasMarmeeBase))

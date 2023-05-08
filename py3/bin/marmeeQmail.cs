@@ -237,7 +237,7 @@ class examples(cs.Cmnd):
 
         # marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
 
-        b.niche.examplesNicheRun("usageEnvs")
+        # b.niche.examplesNicheRun("usageEnvs")
 
         return(cmndOutcome)
 
