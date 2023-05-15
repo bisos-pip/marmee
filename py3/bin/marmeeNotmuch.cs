@@ -375,7 +375,7 @@ class notmuchConfigStdout(cs.Cmnd):
         )
         dataBase = runEnvBases.dataBasePath_obtain()
 
-        mailDirPath = os.path.join(dataBase, 'mailDir')
+        mailDirPath = os.path.join(dataBase, 'maildir')
 
         firstName="FirstName"
         lastName="LastName"
