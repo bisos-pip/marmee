@@ -239,7 +239,7 @@ localrepository = LocalIMAP
 remoterepository = RemoteIMAP
 
 [Repository RemoteIMAP]
-type = IMAP
+type = Gmail
 remotehost = {imapServer}
 remoteuser = {userName}@gmail.com
 ssl = yes
@@ -387,8 +387,10 @@ nametrans = lambda f: '[Gmail]/' + f if f in ['Drafts', 'Starred', 'Important', 
 
         gmailOauth2.refreshToken_func(bpoId=self.bpoId, envRelPath=self.envRelPath,)
 
+        acctName=f'{userName}@gmail.com'
         resStr = self.offlineimapRcTemplate("gmail").format(
-            thisAccount="commonAcctLock",  # Causes UID invalidity when run in parallel thisAccount=userName
+            # thisAccount="commonAcctLock",  # Causes UID invalidity when run in parallel thisAccount=userName
+            thisAccount=acctName,
             inMailAcctMboxesPath=mailDirFullPath,
             imapServer=imapServer,
             userName=userName,
