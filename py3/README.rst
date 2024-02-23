@@ -1,12 +1,12 @@
 ====================
-bisos.marmee Library
+unisos.marme Library
 ====================
 
 .. contents::
    :depth: 3
 ..
 
-MARMEE (Multi-Account Resident Mail Exchanger Environment) Pkg is a library and a
+MARME (Multi-Account Resident Mail Exchanger) Pkg is a library and a
 collection of ICMs for maintaining multiple mail sending and host
 resident mailboxes using offlineimap and notmuch.
 
@@ -31,4 +31,4 @@ Example Usage
 
 ::
 
-   from  bisos import marmee
+   from  unisos import icm
