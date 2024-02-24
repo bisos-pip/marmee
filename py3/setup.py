@@ -17,7 +17,7 @@ def longDescription():
 
 
 #__version__ = get_version('unisos/icm/__init__.py')
-__version__ = '0.7'
+__version__ = '0.8'
 
 
 requires = [
@@ -32,20 +32,22 @@ requires = [
 #print('Requirements: %s' % ','.join(requires))
 
 scripts = [
-    "bin/pkgMarmeeManage.cs",
-    "bin/inMailNotmuch.py",
-    "bin/marmeAcctsManage.py",
-    "bin/marmeSendIcm.py",
-    "bin/inMailDsnProc.py",
-    "bin/bx822-qmail-remote.py",
-    "bin/inMailRetrieve.py",
-    "bin/marmeRuns.py",
-    "bin/marmeTrackingIcm.py",
-    "bin/fbxoMarmeSetup.sh",
-    "bin/marmeSendExample.py",
-    "bin/inMailDsnPlugin.py",
-    "bin/marmeMsgLib.py",
-    "bin/dsnMsgPlugin.py",
+  "bin/marmeeTracking.cs",
+  "bin/qmail-remote.cs",
+  "bin/marmeeBinsPrep.cs",
+  "bin/marmeeDsnProc.cs",
+  "bin/marmeeDaemonSysd.cs",
+  "bin/marmeeNotmuch.cs",
+  "bin/aasMarmeeManage.cs",
+  "bin/marmeeDsnPlugin.cs",
+  "bin/marmeeRuns.cs",
+  "bin/marmeeSend.cs",
+  "bin/marmeeGmailOauth2.cs",
+  "bin/dsnMsgPlugin.py",
+  "bin/marmeeQmail.cs",
+  "bin/marmeeOfflineimap.cs",
+  "bin/marmeeSendExample.py",
+  "bin/pkgMarmeeManage.cs",
 ]
 
 #
