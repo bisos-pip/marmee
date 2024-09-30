@@ -469,7 +469,7 @@ def sendingMethodSet(
     opRes = b.op.Outcome()
     if enumFromStrWhenValid('SendingRunControl', sendingRunControl) == None:
         return (
-            icm.eh_problem_usageError_wOp(opRes, sendingRunControl)
+            b_io.eh.problem_usageError_wOp(opRes, sendingRunControl)
         )
     msg['BX-Sending-Run-Control'] = sendingRunControl
     return opRes
@@ -480,6 +480,26 @@ def sendingMethodSet(
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  =injection=  [[elisp:(outline-show-subtree+toggle)][||]] *Msg Injection (Request Parameters)* General  [[elisp:(org-cycle)][| ]]
 #+end_org """
 ####+END:
+
+def enumFromStrWhenValid(
+        enumTypeStr,
+        enumValueStr,
+):
+    """Given a string, return the Enum's value if valid. Applies to current module because of exec.
+
+Usage: Should be checked against None.  if .enumFromStrWhenValid() == None: badInput()
+"""
+    enumRes = None
+    try:
+        #print "{0}.{1}".format(enumTypeStr, enumValueStr)
+        exec("enumRes = {0}.{1}".format(enumTypeStr, enumValueStr))
+    except AttributeError:
+        #print enumValueStr
+        return None
+    else:
+        #print  enumRes
+        return enumRes
+
 
 ####+BEGIN: bx:dblock:python:enum :enumName "InjectionProgram" :comment "Enum values of qmail, qmailBisos, sendmail"
 """ #+begin_org
@@ -776,13 +796,16 @@ def injectMsgWithQmailVariant(
 
     injectionProgramArgs = []
 
+    # print(InjectionProgram.qmail.value[0])
+    # print(injectionProgram)
+
     #print(InjectionProgram.qmailBisos.value[0])
     if injectionProgram == InjectionProgram.qmailBisos.value[0]:
         injectionProgramCmnd =  "qmail-inject-bisos.cs"
         if cs.runArgs.isRunModeDryRun():
             injectionProgramArgs.append('-n')
     elif injectionProgram == InjectionProgram.qmail.value[0]:
-        injectionProgramCmnd =  "qmail-inject"
+        injectionProgramCmnd =  "/var/qmail/bin/qmail-inject"
         if cs.runArgs.isRunModeDryRun():
             injectionProgramArgs.append('-n')
     elif injectionProgram == InjectionProgram.qmailRemoteBisos.value[0]:

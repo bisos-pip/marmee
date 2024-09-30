@@ -10,6 +10,11 @@ marmeSendExample.py -v 1 --runMode runDebug
 marmeSendExample.py -v 20 --runMode dryRun
 """
 
+from bisos import b
+from bisos.b import cs
+from bisos.b import b_io
+
+
 import sys
 
 import email
@@ -21,15 +26,14 @@ from email.mime.text import MIMEText
 #from email import Encoders
 
 
-#from unisos import ucf
-from unisos import icm
+#from unisos.x822Msg import msgOut
 
-from unisos.x822Msg import msgOut
+# from bisos.marmee import marmeAcctsLib
+#
+from bisos.marmee import x822Out
+from bisos.marmee import marmeeSendLib
 
-from bisos.marmee import marmeAcctsLib
-from bisos.marmee import marmeSendLib
-
-from bisos.marmee import marmeTrackingLib
+from bisos.marmee import marmeeTrackingLib
 
 def curGet_bxoId(): return "mcm"
 def curGet_sr(): return "marme/dsnProc"
@@ -44,7 +48,7 @@ def mailSendingExample():
     bxoId = curGet_bxoId()
     sr = curGet_sr()
 
-    sendingMethod = msgOut.SendingMethod.submit
+    sendingMethod = x822Out.SendingMethod.submit
 
     msg = email.message.Message()  #msg = MIMEText() # MIMEMultipart() 
 
@@ -55,8 +59,8 @@ def mailSendingExample():
 
     envelopeAddr = envelopeLine
 
-    if msgOut.sendingMethodSet(msg, sendingMethod).isProblematic():
-        return msgOut.sendingMethodSet(msg, sendingMethod)
+    if x822Out.sendingMethodSet(msg, sendingMethod).isProblematic():
+        return x822Out.sendingMethodSet(msg, sendingMethod)
         
     msg.add_header('Content-Type', 'text')
     msg.set_payload(
@@ -98,7 +102,7 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     # The message is then sent out
     #
 
-    msgOut.envelopeAddrSet(
+    x822Out.envelopeAddrSet(
         msg,
         mailBoxAddr=envelopeAddr,  # Mandatory
     )
@@ -106,7 +110,7 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     #
     # e.g., peepId will be used to crossRef StatusNotifications
     #
-    msgOut.crossRefInfo(
+    x822Out.crossRefInfo(
         msg,
         crossRefInfo="XrefForStatusNotifications"  # Mandatory
     )
@@ -114,7 +118,7 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     #
     # Delivery Status Notifications will be sent to notifyTo=envelopeAddr
     #
-    msgOut.nonDeliveryNotificationRequetsForTo(
+    x822Out.nonDeliveryNotificationRequetsForTo(
         msg,
         notifyTo=envelopeAddr,
     )
@@ -122,7 +126,7 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     #
     # In case of Non-Delivery, coRecipientsList will be informed
     #
-    msgOut.nonDeliveryNotificationActions(
+    x822Out.nonDeliveryNotificationActions(
         msg,
         coRecipientsList=[toLine],        
     )
@@ -130,7 +134,7 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     #
     # Explicit Delivery Report is requested
     #
-    msgOut.deliveryNotificationRequetsForTo(
+    x822Out.deliveryNotificationRequetsForTo(
         msg,
         recipientsList=[toLine],
         notifyTo=envelopeAddr,
@@ -139,16 +143,16 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     #
     # Explicit Read Receipt is requested
     #    
-    msgOut.dispositionNotificationRequetsForTo(
+    x822Out.dispositionNotificationRequetsForTo(
         msg,
         recipientsList=[toLine],        
         notifyTo=envelopeAddr,
     )
 
-    if msgOut.sendingMethodSet(msg, sendingMethod).isProblematic():
+    if x822Out.sendingMethodSet(msg, sendingMethod).isProblematic():
         return b_io.eh.badLastOutcome()
         
-    if not marmeSendLib.bx822Set_sendWithEnabledAcct(
+    if not marmeeSendLib.bx822Set_sendWithEnabledAcct(
             msg=msg,
             sendingMethod=sendingMethod,
             bxoId=bxoId,
@@ -156,20 +160,20 @@ This message is then submitted for sending with sendCompleteMessage().cmnd(msg)
     ):
         return b_io.eh.badOutcome()
 
-    marmeTrackingLib.deliveryEvent_injectBefore(
+    marmeeTrackingLib.deliveryEvent_injectBefore(
         bxoId,
         sr,
         msg,
     )
 
-    cmndOutcome = marmeSendLib.sendCompleteMessage().cmnd(
+    cmndOutcome = marmeeSendLib.sendCompleteMessage().cmnd(
         interactive=False,
         msg=msg,
         bxoId=bxoId,
         sr=sr,
     )
 
-    marmeTrackingLib.deliveryEvent_injectAfter(
+    marmeeTrackingLib.deliveryEvent_injectAfter(
         bxoId,
         sr,
         msg,
@@ -183,7 +187,7 @@ def main():
     # ICM Library Setup Begins
     #
     
-    icmRunArgs, icmArgsParser = icm.G_argsProc(
+    icmRunArgs, icmArgsParser = cs.G_argsProc(
         arguments=sys.argv,
         extraArgs=None,
     )

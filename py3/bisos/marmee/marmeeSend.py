@@ -173,6 +173,8 @@ def examples_csu(
 
     def cmndParsCurBpoAndEnvRelPath(cps): cps['fromLine'] = fromLine ; cps['toLine'] = toLine
 
+    def cmndParsToLocal(cps): cps['fromLine'] = "postmaster@HSS-1013.intra" ; cps['toLine'] = "postmaster@HSS-1013.intra"
+
     if sectionTitle == "default":
         cs.examples.menuChapter('*MARMEE SendMail --- Send*')
 
@@ -191,7 +193,7 @@ def examples_csu(
     cps=cpsInit(); cmndParsCurBpoAndEnvRelPath(cps);
     menuItem(verbosity='none') ; menuItem(verbosity='full')
 
-    cmndName = "bisosSendProbeMsg" ;  cmndArgs = ""
+    cmndName = "bisosSendProbeMsg" ;  cmndArgs = "inject qmail"
     cps=cpsInit(); cmndParsCurBpoAndEnvRelPath(cps);
     cps['runMode'] = "runDebug"
     menuItem(verbosity='none') ; menuItem(verbosity='full')
@@ -200,6 +202,13 @@ def examples_csu(
     cps=cpsInit(); cmndParsCurBpoAndEnvRelPath(cps);
     cps['runMode'] = "dryRun"
     menuItem(verbosity='none') ; menuItem(verbosity='full')
+
+    cmndName = "bisosSendProbeMsg" ;  cmndArgs = "inject qmail"
+    cps=cpsInit(); cmndParsToLocal(cps);
+    menuItem(verbosity='none') ; menuItem(verbosity='full')
+
+
+    # marmeeSend.cs --fromLine="postmaster@HSS-1013.intra" --toLine="postmaster@HSS-1013.intra" -i bisosSendProbeMsg inject qmail
 
 
 ####+BEGIN: bx:dblock:python:section :title "Support Functions For MsgProcs"
@@ -360,7 +369,8 @@ Please find example of an attached file\n
         sendingMethodInfo = self.cmndArgsGet("1", cmndArgsSpecDict, argsList)
 
         if sendingMethod == x822Out.SendingMethod.inject.value[0]:
-            x822Out.injectMsgWithQmail(msg, sendingMethodInfo)
+            x822Out.injectMsgWithQmailVariant(msg, injectionProgram=sendingMethodInfo)
+            # x822Out.injectMsgWithQmailVariant(msg)
         elif sendingMethod == x822Out.SendingMethod.submit:
             print("NOTYET")
         else:
