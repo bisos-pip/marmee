@@ -112,11 +112,11 @@ from bisos.currents import currentsConfig
    "bisos.marmee.aasMailFps"
    "bisos.marmee.gmailOauth2"
    "bisos.marmee.marmeeGmail"
-   "bisos.marmee.marmeeQmail"
+   "bisos.marmee.marmeeQmailHere"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.gmailOauth2 | bisos.marmee.marmeeGmail | bisos.marmee.marmeeQmail |
+| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.gmailOauth2 | bisos.marmee.marmeeGmail | bisos.marmee.marmeeQmailHere |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -135,10 +135,10 @@ from bisos.marmee import aasOutMailFps
 from bisos.marmee import aasMailFps
 from bisos.marmee import gmailOauth2
 from bisos.marmee import marmeeGmail
-from bisos.marmee import marmeeQmail
+from bisos.marmee import marmeeQmailHere
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.marmeeGmail', 'bisos.marmee.marmeeQmail', ]
+csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.marmeeGmail', 'bisos.marmee.marmeeQmailHere', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -245,7 +245,7 @@ class examples(cs.Cmnd):
 
         marmeeGmail.examples_csu(cur_aasMarmee_base, sectionTitle="default")
 
-        marmeeQmail.examples_csu(cur_aasMarmee_base, sectionTitle="default")
+        marmeeQmailHere.examples_csu(cur_aasMarmee_base, sectionTitle="default")
 
         b.niche.examplesNicheRun("usageEnvs")
 

@@ -113,19 +113,20 @@ from bisos.currents import currentsConfig
    "bisos.marmee.aasInMailFps"
    "bisos.marmee.aasOutMailFps"
    "bisos.marmee.aasMailFps"
-   ;; "bisos.marmee.marmeeQmail"
-   "bisos.qmail.maildir"
-   "bisos.qmail.maildrop"
-   "bisos.qmail.qmailOrAcct"
+   "bisos.marmee.marmeeMaildir"
+   "bisos.marmee.maildrop"
+   "bisos.marmee.marmeeQmailHere"
+   "bisos.marmee.qmailOrAcct"
+   "bisos.qmail.qmail_csu"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.qmail.maildir | bisos.qmail.maildrop | bisos.qmail.qmailOrAcct |
+| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.marmeeMaildir | bisos.marmee.maildrop | bisos.marmee.marmeeQmailHere | bisos.marmee.qmailOrAcct | bisos.qmail.qmail_csu |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /12/ in csuList pyImports=t csuImports=t csuParams=t
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /14/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
 
 from bisos.b.cs import ro
@@ -137,12 +138,14 @@ from bisos.b import clsMethod_csu
 from bisos.marmee import aasInMailFps
 from bisos.marmee import aasOutMailFps
 from bisos.marmee import aasMailFps
-from bisos.qmail import maildir
-from bisos.qmail import maildrop
-from bisos.qmail import qmailOrAcct
+from bisos.marmee import marmeeMaildir
+from bisos.marmee import maildrop
+from bisos.marmee import marmeeQmailHere
+from bisos.marmee import qmailOrAcct
+from bisos.qmail import qmail_csu
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.qmail.maildir', 'bisos.qmail.maildrop', 'bisos.qmail.qmailOrAcct', ]
+csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.marmeeMaildir', 'bisos.marmee.maildrop', 'bisos.marmee.marmeeQmailHere', 'bisos.marmee.qmailOrAcct', 'bisos.qmail.qmail_csu', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -186,9 +189,10 @@ class examples(cs.Cmnd):
              cmndOutcome: b.op.Outcome,
     ) -> b.op.Outcome:
         """FrameWrk: ICM Examples"""
+        failed = b_io.eh.badOutcome
         callParamsDict = {}
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
+            return failed(cmndOutcome)
 ####+END:
         self.cmndDocStr(f""" #+begin_org *
 ** [[elisp:(org-cycle)][| *CmndDesc:* | ]]  Conventional top level example.
@@ -209,33 +213,31 @@ class examples(cs.Cmnd):
                 cs.examples.execInsert(execLine=f'bx-currents.cs -v 20 -i usgCursParsSet {each}={curParsDictValue[each]}')
 ####+END:
 
-        def cpsInit(): return collections.OrderedDict()
-        def menuItem(): cs.examples.cmndInsert(cmndName, cps, cmndArgs, verbosity='little') # type: ignore
-        def execLineEx(cmndStr): cs.examples.execInsert(execLine=cmndStr)
-
-        #logControler = b_io.log.Control()
-        #logControler.loggerSetLevel(20)
-
         cs.examples.myName(cs.G.icmMyName(), cs.G.icmMyFullName())
-
         cs.examples.commonBrief()
 
-        bleep.examples_icmBasic()
+        # bleep.examples_icmBasic()
 
-        cs.examples.menuChapter('*Currents Examples Settings*')
-        cur_examples()
+        # cs.examples.menuChapter('*Currents Examples Settings*')
+        # cur_examples()
 
-        cur_marmeeEnvRelPath = f"aas/marmee/qmail/alias"
+        # cur_marmeeEnvRelPath = f"aas/marmee/qmailHere/alias"
+        cur_marmeeEnvRelPath = f"aas/marmee/qmailHere"
+
+        bpoRunBases.examples_bpo_runBases(cur_aasMarmee_bpoId, f"aas/marmee/qmailHere/bystar", sectionTitle="default")
+        # bpoRunBases.examples_bpo_runBases(cur_aasMarmee_bpoId, f"aas/marmee/qmailHere/bisos")
+        # bpoRunBases.examples_bpo_runBases(cur_aasMarmee_bpoId, f"aas/marmee/qmailHere/bystar")
 
         # marmeeQmail.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
 
-        maildir.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
+        marmeeMaildir.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
 
-        maildrop.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
+        # maildrop.examples_csu(cur_aasMarmee_bpoId, cur_marmeeEnvRelPath, cur_aasMarmee_base, sectionTitle="default")
 
-        qmailOrAcct.examples_csu(qmailAcct="alias", qmailAddr="postmaster", sectionTitle="default")
+        # qmailOrAcct.examples_csu(qmailAcct="alias", qmailAddr="postmaster", sectionTitle="default")
 
-        # marmeeQmail.examplesAas_csu(cur_aasMarmee_base, sectionTitle="default")
+        p = pathlib.Path(f"~{cur_aasMarmee_bpoId}").expanduser().joinpath(f"aas/marmee/qmailHere")
+        marmeeQmailHere.examples_csu(cur_aasMarmee_bpoId, marmeeBase=str(p), sectionTitle="default")
 
         # b.niche.examplesNicheRun("usageEnvs")
 
