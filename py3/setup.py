@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-# Template File:  "/bisos/apps/defaults/begin/templates/purposed/pyModule/python/setup.py"
+# Template File:  /bisos/apps/defaults/begin/templates/purposed/pyModule/python/setup.py
+# Blee Panel: /bisos/git/auth/bxRepos/blee-binders/bisos-core/bisos-pip/bisos.pycs/pipPackaging/_nodeBase_/fullUsagePanel-en.org
 
-####+BEGIN: bx:dblock:global:file-insert :mode python :file "/bisos/apps/defaults/begin/templates/purposed/pyModule/python/commonSetupCode.py"
+# b:py3:pypi:setup/pkgName Arguments  :pkgName "somePkg" :pkgNameSpace "bisos"
+####+BEGIN: b:py3:pypi:setup/pkgName :comment "Auto Detected"
 
 import setuptools
 import re
@@ -10,99 +12,106 @@ import inspect
 import pathlib
 
 def pkgName():
-    """ From this eg., filepath=.../bisos-pip/PkgName/py3/setup.py, extract PkgName. """
+    ''' From this eg., filepath=.../bisos-pip/PkgName/py3/setup.py, extract PkgName. '''
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     grandMother = pathlib.Path(filename).resolve().parent.parent.name
-    return f"bisos.{grandMother}"
+    return f'bisos.{grandMother}'
 
 def description():
-    """ Extract title from ./README.org which is expected to have a title: line. """
+    ''' Extract title from ./_description.org which is expected to have a #+title: line. '''
     try:
-        with open('./README.org') as file:
+        with open('./_description.org') as file:
             while line := file.readline():
                 if match := re.search(r'^#\+title: (.*)',  line.rstrip()):
                     return match.group(1)
-                return "MISSING TITLE in ./README.org"
+            return 'MISSING TITLE in ./_description.org'
     except IOError:
-        return  "ERROR: Could not read ./README.org file."
+        return  'ERROR: Could not read ./_description.org file.'
 
 def longDescription():
-    """ Convert README.org to README.rst. """
+    ''' Read README.rst as a string. '''
+    fileName = './README.rst'
     try:
-        import pypandoc
-    except ImportError:
-        result = "WARNING: pypandoc module not found, could not convert to RST"
+        with open(fileName) as file:
+           result = file.read()
         return result
-    if (result := pypandoc.convert_file('README.org', 'rst')) is None:
-        result = "ERROR: pypandoc.convert_file('README.org', 'rst') Failed."
-    return result
+    except IOError:
+        return  f'ERROR: Could not read {fileName} file.'
 
 ####+END:
 
-# :curDevVer "0.92" :pypiNextVer "0.95"
-####+BEGIN: b:py3:pypi/nextVersion :increment 0.01
+# b:py3:pypi:setup/version Arguments  :forSys t :forPyPi t :constant "666"
+####+BEGIN: b:py3:pypi:setup/version :comment "Auto Detected"
 
-# ./pypiUploadVer does not exist -- pypiNextVer=0.81 -- installedVersion=0.8
+# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.81 -- forSysVersion=0.8 -- constant=NA
 def pkgVersion():
-        return '0.8'  # Version Nu Of Installed Pkg
+        return '0.8'
 
 ####+END:
 
-####+BEGIN: b:py3:pypi/requires :extras ()
+# b:py3:pypi:setup/requires :extras ; :requirements "requirements.txt" (bring here requirements.txt)
+####+BEGIN: b:py3:pypi:setup/requires :extras ()
 
-requires = [ 
+requires = [
 "blee",
 "blee.csPlayer",
 "blee.icmPlayer",
 "bisos",
 "bisos.b",
+"bisos.banna",
+"bisos.basics",
+"bisos.binsprep",
 "bisos.bpo",
 "bisos.common",
 "bisos.currents",
 "bisos.debian",
+"bisos.facter",
 "bisos.qmail",
-"from",
 ]
 ####+END:
 
-####+BEGIN: b:py3:pypi/scripts :comment ""
+# b:py3:pypi:setup/scripts :comment
+####+BEGIN: b:py3:pypi:setup/scripts :comment ""
 
-scripts = [ 
-'./bin/aasMarmeeManage.cs',
-'./bin/dsnMsgPlugin.py',
-'./bin/marmeeBinsPrep.cs',
-'./bin/marmeeDaemonSysd.cs',
-'./bin/marmeeDsnPlugin.cs',
-'./bin/marmeeDsnProc.cs',
-'./bin/marmeeGmailOauth2.cs',
-'./bin/marmeeNotmuch.cs',
-'./bin/marmeeOfflineimap.cs',
-'./bin/marmeeQmail.cs',
-'./bin/marmeeRuns.cs',
-'./bin/marmeeSend.cs',
-'./bin/marmeeSendExample.py',
-'./bin/marmeeTracking.cs',
-'./bin/pkgMarmeeManage.cs',
-'./bin/qmail-remote.cs',
+scripts = [
+'bin/aasMarmeeManage.cs',
+'bin/aasMarmeeQmailHere.cs',
+'bin/dsnMsgPlugin.py',
+'bin/marmee-admin.cs',
+'bin/marmee-assemble.cs',
+'bin/marmee-binsPrep.cs',
+'bin/marmeeDaemonSysd.cs',
+'bin/marmeeDsnPlugin.cs',
+'bin/marmeeDsnProc.cs',
+'bin/marmeeGmailOauth2.cs',
+'bin/marmeeNotmuch.cs',
+'bin/marmeeOfflineimap.cs',
+'bin/marmeeQmailObsoleted.cs',
+'bin/marmeeRuns.cs',
+'bin/marmeeSend.cs',
+'bin/marmeeSendExample.py',
+'bin/marmeeTracking.cs',
+'bin/pkgMarmeeManage.cs',
 ]
 ####+END:
 
-#
-# Data files would be  specified in ./MANIFEST.in as: # recursive-include bisos/pkgName *
-#
+# b:py3:pypi:setup/dataFiles :comment
+####+BEGIN: b:py3:pypi:setup/dataFiles :comment "Instead of ./MANIFEST.in or in pyproject.toml"
 
 data_files = [
+(' ',  ['lh-agpl3-LICENSE.txt', '_description.org', 'README.rst']),
 ]
+####+END:
 
 # :pkgName "--auto--"  --- results in use of name=pkgName(),
-####+BEGIN: b:py3:pypi/setupFuncArgs :pkgName ""
+####+BEGIN: b:py3:pypi:setup/funcArgs :comment "defaults to --auto--"
 
 setuptools.setup(
-    name='bisos.marmee',
+    name=pkgName(),  # bisos.marmee
     version=pkgVersion(),
     packages=setuptools.find_packages(),
     scripts=scripts,
-    #data_files=data_files,
+    data_files=data_files,
     include_package_data=True,
     zip_safe=False,
     author='Mohsen Banan',
