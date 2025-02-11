@@ -52,10 +52,9 @@ def pkgVersion():
 # b:py3:pypi:setup/requires :extras ; :requirements "requirements.txt" (bring here requirements.txt)
 ####+BEGIN: b:py3:pypi:setup/requires :extras ()
 
-requires = [ 
+requires = [
 "blee",
-"blee.csPlayer",
-"blee.icmPlayer",
+"bisos.csPlayer",
 "bisos",
 "bisos.b",
 "bisos.banna",
@@ -63,6 +62,7 @@ requires = [
 "bisos.binsprep",
 "bisos.bpo",
 "bisos.common",
+"bisos.csPlayer",
 "bisos.currents",
 "bisos.debian",
 "bisos.facter",
@@ -73,7 +73,7 @@ requires = [
 # b:py3:pypi:setup/scripts :comment
 ####+BEGIN: b:py3:pypi:setup/scripts :comment ""
 
-scripts = [ 
+scripts = [
 'bin/aasMarmeeManage.cs',
 'bin/aasMarmeeQmailHere.cs',
 'bin/dsnMsgPlugin.py',
@@ -98,7 +98,7 @@ scripts = [
 # b:py3:pypi:setup/dataFiles :comment
 ####+BEGIN: b:py3:pypi:setup/dataFiles :comment "Instead of ./MANIFEST.in or in pyproject.toml"
 
-data_files = [ 
+data_files = [
 (' ',  ['lh-agpl3-LICENSE.txt', '_description.org', 'README.rst']),
 ]
 ####+END:

@@ -117,12 +117,12 @@ def cmndParsCurBxoSr(cps): cps['bxoId'] = curGet_bxoId(); cps['sr'] = curGet_sr(
 (setq  b:py:cs:csuList
   (list
    "bisos.b.cs.ro"
-   "blee.icmPlayer.bleep"
+   "bisos.csPlayer.bleep"
    "bisos.marmee.marmeeSend"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.marmee.marmeeSend |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.marmee.marmeeSend |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -131,11 +131,11 @@ def cmndParsCurBxoSr(cps): cps['bxoId'] = curGet_bxoId(); cps['sr'] = curGet_sr(
 #+end_org """
 
 from bisos.b.cs import ro
-from blee.icmPlayer import bleep
+from bisos.csPlayer import bleep
 from bisos.marmee import marmeeSend
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.marmee.marmeeSend', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.marmee.marmeeSend', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -187,7 +187,7 @@ class examples(cs.Cmnd):
 
         # icm.ex_gCommon()
 
-        bleep.examples_icmBasic()
+        bleep.examples_csBasic()
 
 #         """
 # **  [[elisp:(org-cycle)][| ]]  [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] [[elisp:(beginning-of-buffer)][Top]] [[elisp:(delete-other-windows)][(1)]] || Examples   ::  General Dev and Testing IIFs [[elisp:(org-cycle)][| ]]

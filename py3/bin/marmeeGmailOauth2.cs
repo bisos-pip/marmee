@@ -151,13 +151,13 @@ from bisos.currents import currentsConfig
 (setq  b:py:cs:csuList
   (list
    "bisos.b.cs.ro"
-   "blee.csPlayer.bleep"
+   "bisos.csPlayer.bleep"
    "bisos.bpo.bpo"
    "bisos.marmee.gmailOauth2"
 ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.marmee.gmailOauth2 |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.marmee.gmailOauth2 |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -166,12 +166,12 @@ from bisos.currents import currentsConfig
 #+end_org """
 
 #from bisos.b.cs import ro
-from blee.csPlayer import bleep
+from bisos.csPlayer import bleep
 #from bisos.bpo import bpo
 from bisos.marmee import gmailOauth2
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.gmailOauth2', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.gmailOauth2', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -233,7 +233,7 @@ class examples(cs.Cmnd):
 
         cs.examples.commonBrief()
 
-        bleep.examples_icmBasic()
+        bleep.examples_csBasic()
 
         cs.examples.menuChapter('*Currents Examples Settings*')
         cur_examples()

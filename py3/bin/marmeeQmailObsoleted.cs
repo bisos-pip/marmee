@@ -103,7 +103,7 @@ from bisos.currents import currentsConfig
 (setq  b:py:cs:csuList
   (list
    "bisos.b.cs.ro"
-   "blee.csPlayer.bleep"
+   "bisos.csPlayer.bleep"
    ;; "bisos.marmee.marmeAcctsLib"
    "bisos.bpo.bpo"
    "bisos.bpo.bpoRunBases"
@@ -120,7 +120,7 @@ from bisos.currents import currentsConfig
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.maildir | bisos.marmee.maildrop | bisos.marmee.qmailOrAcct |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.maildir | bisos.marmee.maildrop | bisos.marmee.qmailOrAcct |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -129,7 +129,7 @@ from bisos.currents import currentsConfig
 #+end_org """
 
 from bisos.b.cs import ro
-from blee.csPlayer import bleep
+from bisos.csPlayer import bleep
 from bisos.bpo import bpo
 from bisos.bpo import bpoRunBases
 from bisos.b import fpCls
@@ -142,7 +142,7 @@ from bisos.marmee import maildrop
 from bisos.marmee import qmailOrAcct
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.maildir', 'bisos.marmee.maildrop', 'bisos.marmee.qmailOrAcct', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.maildir', 'bisos.marmee.maildrop', 'bisos.marmee.qmailOrAcct', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -220,7 +220,7 @@ class examples(cs.Cmnd):
 
         cs.examples.commonBrief()
 
-        bleep.examples_icmBasic()
+        bleep.examples_csBasic()
 
         cs.examples.menuChapter('*Currents Examples Settings*')
         cur_examples()

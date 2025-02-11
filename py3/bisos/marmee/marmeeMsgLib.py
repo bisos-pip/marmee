@@ -87,7 +87,7 @@ import collections
 from unisos import ucf
 from unisos import icm
 
-from blee.icmPlayer import bleep
+from bisos.csPlayer import bleep
 
 from bisos.currents import bxCurrentsConfig
 

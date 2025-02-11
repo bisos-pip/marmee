@@ -112,7 +112,7 @@ sysdUnitMarmee = marmeeDaemonSysd.sysdUnitMarmee
 (setq  b:py:cs:csuList
   (list
    "bisos.b.cs.ro"
-   "blee.icmPlayer.bleep"
+   "bisos.csPlayer.bleep"
    "bisos.b.clsMethod_csu"
    "bisos.debian.configFile"
    "bisos.debian.bifSystemd"
@@ -120,7 +120,7 @@ sysdUnitMarmee = marmeeDaemonSysd.sysdUnitMarmee
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.b.clsMethod_csu | bisos.debian.configFile | bisos.debian.bifSystemd | bisos.marmee.marmeeDaemonSysd |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.b.clsMethod_csu | bisos.debian.configFile | bisos.debian.bifSystemd | bisos.marmee.marmeeDaemonSysd |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -129,14 +129,14 @@ sysdUnitMarmee = marmeeDaemonSysd.sysdUnitMarmee
 #+end_org """
 
 from bisos.b.cs import ro
-from blee.icmPlayer import bleep
+from bisos.csPlayer import bleep
 from bisos.b import clsMethod_csu
 from bisos.debian import configFile
 from bisos.debian import bifSystemd
 from bisos.marmee import marmeeDaemonSysd
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.b.clsMethod_csu', 'bisos.debian.configFile', 'bisos.debian.bifSystemd', 'bisos.marmee.marmeeDaemonSysd', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.b.clsMethod_csu', 'bisos.debian.configFile', 'bisos.debian.bifSystemd', 'bisos.marmee.marmeeDaemonSysd', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -180,7 +180,7 @@ class examples(cs.Cmnd):
 
         cs.examples.commonBrief()
 
-        bleep.examples_icmBasic()
+        bleep.examples_csBasic()
 
         # cs.examples.menuChapter('*Currents Examples Settings*')
         # cur_examples()

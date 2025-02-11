@@ -96,13 +96,13 @@ from bisos.bpo import bpoRunBases
 (setq  b:py:cs:csuList
   (list
    "bisos.b.cs.ro"
-   "blee.icmPlayer.bleep"
+   "bisos.csPlayer.bleep"
    "bisos.bpo.bpo"
    "bisos.marmee.aasInMailFps"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.icmPlayer.bleep | bisos.bpo.bpo | bisos.marmee.aasInMailFps |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.marmee.aasInMailFps |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -111,12 +111,12 @@ from bisos.bpo import bpoRunBases
 #+end_org """
 
 from bisos.b.cs import ro
-from blee.icmPlayer import bleep
+from bisos.csPlayer import bleep
 from bisos.bpo import bpo
 from bisos.marmee import aasInMailFps
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.aasInMailFps', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.aasInMailFps', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -195,7 +195,7 @@ class examples(cs.Cmnd):
 
         cs.examples.commonBrief()
 
-        bleep.examples_icmBasic()
+        bleep.examples_csBasic()
 
         cs.examples.menuChapter('*Currents Examples Settings*')
         cur_examples()

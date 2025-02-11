@@ -94,11 +94,11 @@ import os
 (setq  b:py:cs:csuList
   (list
    "bisos.b.cs.ro"
-   "blee.icmPlayer.bleep"
+   "bisos.csPlayer.bleep"
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | blee.icmPlayer.bleep |
+| bisos.b.cs.ro | bisos.csPlayer.bleep |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
@@ -107,10 +107,10 @@ import os
 #+end_org """
 
 from bisos.b.cs import ro
-from blee.icmPlayer import bleep
+from bisos.csPlayer import bleep
 
 
-csuList = [ 'bisos.b.cs.ro', 'blee.icmPlayer.bleep', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -192,7 +192,7 @@ class examples(cs.Cmnd):
 
         cs.examples.commonBrief()
 
-        bleep.examples_icmBasic()
+        bleep.examples_csBasic()
 
 
 ####+BEGIN: bx:cs:python:cmnd:subSection :title "Dev And Testing"
