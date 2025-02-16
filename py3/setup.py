@@ -43,7 +43,7 @@ def longDescription():
 # b:py3:pypi:setup/version Arguments  :forSys t :forPyPi t :constant "666"
 ####+BEGIN: b:py3:pypi:setup/version :comment "Auto Detected"
 
-# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.83 -- forSysVersion=0.8 -- constant=NA
+# ./pypiUploadVer DID NOT exist -- forPypiVersion=0.85 -- forLocalVersion=0.8 -- constant=NA
 def pkgVersion():
         return '0.8'
 
@@ -53,8 +53,6 @@ def pkgVersion():
 ####+BEGIN: b:py3:pypi:setup/requires :extras ()
 
 requires = [
-"blee",
-"bisos.csPlayer",
 "bisos",
 "bisos.b",
 "bisos.banna",
@@ -92,6 +90,7 @@ scripts = [
 'bin/marmeeSendExample.py',
 'bin/marmeeTracking.cs',
 'bin/pkgMarmeeManage.cs',
+'bin/sendOauthWebStart.py',
 ]
 ####+END:
 

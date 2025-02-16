@@ -40,7 +40,7 @@
 #+end_org """
 import typing
 csInfo: typing.Dict[str, typing.Any] = { 'moduleName': ['marmeeSend'], }
-csInfo['version'] = '202210200535'
+csInfo['version'] = '202502120253'
 csInfo['status']  = 'inUse'
 csInfo['panel'] = 'marmeeSend-Panel.org'
 csInfo['groupingType'] = 'IcmGroupingType-pkged'
@@ -58,8 +58,9 @@ Module description comes here.
 
 ####+BEGIN: b:prog:file/orgTopControls :outLevel 1
 """ #+begin_org
-* [[elisp:(org-cycle)][| Controls |]] :: [[elisp:(delete-other-windows)][(1)]] | [[elisp:(show-all)][Show-All]]  [[elisp:(org-shifttab)][Overview]]  [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] | [[elisp:(bx:org:run-me)][Run]] | [[elisp:(bx:org:run-me-eml)][RunEml]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]]  [[elisp:(save-buffer)][Save]]  [[elisp:(kill-buffer)][Quit]] [[elisp:(org-cycle)][| ]]
+* [[elisp:(org-cycle)][| Controls |]] :: [[elisp:(delete-other-windows)][(1)]] | [[elisp:(show-all)][Show-All]]  [[elisp:(org-shifttab)][Overview]]  [[elisp:(progn (org-shifttab) (org-content))][Content]] | [[file:Panel.org][Panel]] | [[elisp:(blee:ppmm:org-mode-toggle)][Nat]] | [[elisp:(bx:org:run-me)][Run]] | [[elisp:(bx:org:run-me-eml)][RunEml]] | [[elisp:(progn (save-buffer) (kill-buffer))][S&Q]]  [[elisp:(save-buffer)][Save]]  [[elisp:(kill-buffer)][Quit]] [[elisp:(org-cycle)][| ]]
 ** /Version Control/ ::  [[elisp:(call-interactively (quote cvs-update))][cvs-update]]  [[elisp:(vc-update)][vc-update]] | [[elisp:(bx:org:agenda:this-file-otherWin)][Agenda-List]]  [[elisp:(bx:org:todo:this-file-otherWin)][ToDo-List]]
+
 #+end_org """
 ####+END:
 
@@ -69,13 +70,14 @@ Module description comes here.
 #+end_org """
 ####+END:
 
-####+BEGIN: b:py3:cs:framework/imports :basedOn "classification"
+####+BEGINNOT: b:py3:cs:framework/imports :basedOn "classification"
 """ #+begin_org
-** Imports Based On Classification=cs-u
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] *Imports* =Based on Classification=cs-u=
 #+end_org """
 from bisos import b
 from bisos.b import cs
 from bisos.b import b_io
+from bisos.common import csParam
 
 import collections
 ####+END:
@@ -95,9 +97,17 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
-from unisos.x822Msg import msgOut
-from unisos.x822Msg import msgIn
-#from unisos.x822Msg import msgLib
+from bisos.marmee import x822Lib
+from bisos.marmee import x822In
+from bisos.marmee import x822Out
+
+#
+# Above should replace below NOTYET 2025 -- 
+#
+# from uni sos.x822Msg import msgOut
+# from uni sos.x822Msg import msgIn
+##from uni sos.x822Msg import msgLib
+
 
 ####+BEGINNOT: bx:dblock:global:file-insert :file "/libre/ByStar/InitialTemplates/update/sw/icm/py/curGetBxOSr.py"
 """
@@ -148,7 +158,7 @@ def g_extraParams():
 
 ####+BEGIN: b:py3:cs:main/exposedSymbols :classes ()
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] ~Exposed Symbols List Specification~ with /0/ in Classes List
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] ~CS Controls and Exposed Symbols List Specification~ with /0/ in Classes List
 #+end_org """
 ####+END:
 
@@ -159,7 +169,7 @@ def g_extraParams():
 ####+END:
 
 
-####+BEGIN: bx:icm:py3:section :title "CS-Commands"
+####+BEGIN: bx:cs:py3:section :title "CS-Commands"
 """ #+begin_org
 *  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  /Section/    [[elisp:(outline-show-subtree+toggle)][||]] *CS-Commands*  [[elisp:(org-cycle)][| ]]
 #+end_org """
@@ -180,9 +190,10 @@ class examples(cs.Cmnd):
              cmndOutcome: b.op.Outcome,
     ) -> b.op.Outcome:
         """FrameWrk: ICM Examples"""
+        failed = b_io.eh.badOutcome
         callParamsDict = {}
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
+            return failed(cmndOutcome)
 ####+END:
 
         # icm.ex_gCommon()
@@ -230,9 +241,13 @@ class sendFromPartialFileWithPars(cs.Cmnd):
              msg: typing.Any=None,   # pyInv Argument
     ) -> b.op.Outcome:
 
+        failed = b_io.eh.badOutcome
         callParamsDict = {'outMailAcct': outMailAcct, 'inFile': inFile, 'sendingMethod': sendingMethod, }
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
+            return failed(cmndOutcome)
+        outMailAcct = csParam.mappedValue('outMailAcct', outMailAcct)
+        inFile = csParam.mappedValue('inFile', inFile)
+        sendingMethod = csParam.mappedValue('sendingMethod', sendingMethod)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
 ** [[elisp:(org-cycle)][| *CmndDesc:* | ]] Submit a message using inFile and pars: outMailAcct, submissionMethod.
@@ -328,9 +343,15 @@ class msgSend_basic(cs.Cmnd):
              sendingMethod: typing.Optional[str]=None,  # Cs Optional Param
     ) -> b.op.Outcome:
 
+        failed = b_io.eh.badOutcome
         callParamsDict = {'bxoId': bxoId, 'sr': sr, 'fromLine': fromLine, 'toLine': toLine, 'sendingMethod': sendingMethod, }
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
+            return failed(cmndOutcome)
+        bxoId = csParam.mappedValue('bxoId', bxoId)
+        sr = csParam.mappedValue('sr', sr)
+        fromLine = csParam.mappedValue('fromLine', fromLine)
+        toLine = csParam.mappedValue('toLine', toLine)
+        sendingMethod = csParam.mappedValue('sendingMethod', sendingMethod)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
 ** [[elisp:(org-cycle)][| *CmndDesc:* | ]]
@@ -416,9 +437,15 @@ class msgSend_tracked(cs.Cmnd):
              sendingMethod: typing.Optional[str]=None,  # Cs Optional Param
     ) -> b.op.Outcome:
 
+        failed = b_io.eh.badOutcome
         callParamsDict = {'bxoId': bxoId, 'sr': sr, 'fromLine': fromLine, 'toLine': toLine, 'sendingMethod': sendingMethod, }
         if self.invocationValidate(rtInv, cmndOutcome, callParamsDict, None).isProblematic():
-            return b_io.eh.badOutcome(cmndOutcome)
+            return failed(cmndOutcome)
+        bxoId = csParam.mappedValue('bxoId', bxoId)
+        sr = csParam.mappedValue('sr', sr)
+        fromLine = csParam.mappedValue('fromLine', fromLine)
+        toLine = csParam.mappedValue('toLine', toLine)
+        sendingMethod = csParam.mappedValue('sendingMethod', sendingMethod)
 ####+END:
         self.cmndDocStr(f""" #+begin_org
 ** [[elisp:(org-cycle)][| *CmndDesc:* | ]]

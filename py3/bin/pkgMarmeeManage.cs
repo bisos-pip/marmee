@@ -83,7 +83,6 @@ import collections
 from  bisos.platform import bxPlatformThis
 from  bisos.platform import bxPlatformConfig
 
-from unisos.common import icmsPkgLib
 from bisos.marmee import marmeePkgThis
 
 import os
@@ -233,13 +232,17 @@ class examples(cs.Cmnd):
         icmsPkgInfoBaseDir = marmeePkgThis.pkgBase_configDir()
         icmsPkgModuleBaseDir = marmeePkgThis.pkgBase_baseDir()
 
-        icmsPkgLib.examples_pkgInfoParsFull(
-            icmsPkgNameSpecification(),
-            icmsPkgInfoBaseDir=icmsPkgInfoBaseDir,
-            icmsPkgModuleBaseDir=icmsPkgModuleBaseDir,
-            icmsPkgControlBaseDir=icmsPkgControlBaseDirDefault(),
-            icmsPkgRunBaseDir=icmsPkgRunBaseDirDefault(),
-        )
+        #
+        # icmsPkgLib needs to be absrobed. NOTYET. 20250212
+        #
+
+        # icmsPkgLib.examples_pkgInfoParsFull(
+        #     icmsPkgNameSpecification(),
+        #     icmsPkgInfoBaseDir=icmsPkgInfoBaseDir,
+        #     icmsPkgModuleBaseDir=icmsPkgModuleBaseDir,
+        #     icmsPkgControlBaseDir=icmsPkgControlBaseDirDefault(),
+        #     icmsPkgRunBaseDir=icmsPkgRunBaseDirDefault(),
+        # )
 
         b.ignore(ro.__doc__,)  # We are not using these modules, but they are auto imported.
 

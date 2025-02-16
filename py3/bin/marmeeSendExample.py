@@ -26,7 +26,6 @@ from email.mime.text import MIMEText
 #from email import Encoders
 
 
-#from unisos.x822Msg import msgOut
 
 # from bisos.marmee import marmeAcctsLib
 #
@@ -192,8 +191,8 @@ def main():
         extraArgs=None,
     )
     
-    logControler = b_io.log.Control()
-    logControler.loggerSet(icmRunArgs)
+    # logControler = b_io.log.Control()
+    # logControler.loggerSet(icmRunArgs)
 
     G = cs.globalContext.get()
     G.globalContextSet( icmRunArgs=icmRunArgs )
