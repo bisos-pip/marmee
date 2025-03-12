@@ -28,7 +28,8 @@
 ####+BEGIN: b:prog:file/particulars :authors ("./inserts/authors-mb.org")
 """ #+begin_org
 * *[[elisp:(org-cycle)][| Particulars |]]* :: Authors, version
-** This File: NOTYET
+** This File: /l/pip/marmee/py3/bisos/marmee/gmailOauth2.py
+** File True Name: /bisos/git/auth/bxRepos/bisos-pip/marmee/py3/bisos/marmee/gmailOauth2.py
 ** Authors: Mohsen BANAN, http://mohsen.banan.1.byname.net/contact
 #+end_org """
 ####+END:

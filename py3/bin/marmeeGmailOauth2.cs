@@ -153,25 +153,31 @@ from bisos.currents import currentsConfig
    "bisos.b.cs.ro"
    "bisos.csPlayer.bleep"
    "bisos.bpo.bpo"
+   "bisos.bpo.bpoFps_csu"
+   "bisos.b.fpCls"              ;; param fpBase
+   "bisos.b.clsMethod_csu"      ;; param cls
    "bisos.marmee.gmailOauth2"
 ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.marmee.gmailOauth2 |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoFps_csu | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.gmailOauth2 |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /4/ in csuList pyImports=t csuImports=t csuParams=t
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /7/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
 
-#from bisos.b.cs import ro
+from bisos.b.cs import ro
 from bisos.csPlayer import bleep
-#from bisos.bpo import bpo
+from bisos.bpo import bpo
+from bisos.bpo import bpoFps_csu
+from bisos.b import fpCls
+from bisos.b import clsMethod_csu
 from bisos.marmee import gmailOauth2
 
 
-csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.marmee.gmailOauth2', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoFps_csu', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.gmailOauth2', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
@@ -181,6 +187,16 @@ def g_extraParams():
     cs.argsparseBasedOnCsParams(csParams)
 
 ####+END:
+
+####+BEGIN: b:py3:cs:main/exposedSymbols :classes ("gmailOauth2.AasMail_googleCreds_FPs")
+""" #+begin_org
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] ~CS Controls and Exposed Symbols List Specification~ with /1/ in Classes List
+#+end_org """
+
+AasMail_googleCreds_FPs = gmailOauth2.AasMail_googleCreds_FPs # exec/eval-ed as __main__.ClassName
+
+####+END:
+
 
 ####+BEGIN: b:py3:cs:cmnd/classHead :cmndName "examples" :cmndType "Cmnd-FmWrk"  :comment "FrameWrk: ICM Examples" :parsMand "" :parsOpt "cntnrId rosmu" :argsMin 0 :argsMax 0 :pyInv ""
 """ #+begin_org
@@ -237,6 +253,12 @@ class examples(cs.Cmnd):
 
         cs.examples.menuChapter('*Currents Examples Settings*')
         cur_examples()
+
+        # bpoFps_csu.examples_csu().pyCmnd(bpoId=cur_aasMarmee_bpoId, cls='AasMail_googleCreds_FPs')
+
+        bpoPath = bpo.bpoBaseDir_obtain(cur_aasMarmee_bpoId)
+
+        fpCls.examples_csu().pyCmnd(fpBase=f"{bpoPath}/{cur_aasMarmee_envRelPath}/control/mail/credsFp/", cls='AasMail_googleCreds_FPs')
 
         gmailOauth2.examples_csu(cur_aasMarmee_bpoId, cur_aasMarmee_envRelPath, sectionTitle="default")
 

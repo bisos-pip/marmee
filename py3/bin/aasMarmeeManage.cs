@@ -105,6 +105,7 @@ from bisos.currents import currentsConfig
    "bisos.bpo.bpo"
    "bisos.bpo.bpoRunBases"
    ;; "bisos.marmee.marmeeCurrentsLib"
+   "bisos.b.fp_csu"
    "bisos.b.fpCls"
    "bisos.b.clsMethod_csu"
    "bisos.marmee.aasInMailFps"
@@ -116,18 +117,19 @@ from bisos.currents import currentsConfig
  ))
 #+END_SRC
 #+RESULTS:
-| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.gmailOauth2 | bisos.marmee.marmeeGmail | bisos.marmee.marmeeQmailHere |
+| bisos.b.cs.ro | bisos.csPlayer.bleep | bisos.bpo.bpo | bisos.bpo.bpoRunBases | bisos.b.fp_csu | bisos.b.fpCls | bisos.b.clsMethod_csu | bisos.marmee.aasInMailFps | bisos.marmee.aasOutMailFps | bisos.marmee.aasMailFps | bisos.marmee.gmailOauth2 | bisos.marmee.marmeeGmail | bisos.marmee.marmeeQmailHere |
 #+end_org """
 
 ####+BEGIN: b:py3:cs:framework/csuListProc :pyImports t :csuImports t :csuParams t
 """ #+begin_org
-*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /12/ in csuList pyImports=t csuImports=t csuParams=t
+*  _[[elisp:(blee:menu-sel:outline:popupMenu)][±]]_ _[[elisp:(blee:menu-sel:navigation:popupMenu)][Ξ]]_ [[elisp:(outline-show-branches+toggle)][|=]] [[elisp:(bx:orgm:indirectBufOther)][|>]] *[[elisp:(blee:ppmm:org-mode-toggle)][|N]]*  CsFrmWrk   [[elisp:(outline-show-subtree+toggle)][||]] =Process CSU List= with /13/ in csuList pyImports=t csuImports=t csuParams=t
 #+end_org """
 
 from bisos.b.cs import ro
 from bisos.csPlayer import bleep
 from bisos.bpo import bpo
 from bisos.bpo import bpoRunBases
+from bisos.b import fp_csu
 from bisos.b import fpCls
 from bisos.b import clsMethod_csu
 from bisos.marmee import aasInMailFps
@@ -138,7 +140,7 @@ from bisos.marmee import marmeeGmail
 from bisos.marmee import marmeeQmailHere
 
 
-csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.marmeeGmail', 'bisos.marmee.marmeeQmailHere', ]
+csuList = [ 'bisos.b.cs.ro', 'bisos.csPlayer.bleep', 'bisos.bpo.bpo', 'bisos.bpo.bpoRunBases', 'bisos.b.fp_csu', 'bisos.b.fpCls', 'bisos.b.clsMethod_csu', 'bisos.marmee.aasInMailFps', 'bisos.marmee.aasOutMailFps', 'bisos.marmee.aasMailFps', 'bisos.marmee.gmailOauth2', 'bisos.marmee.marmeeGmail', 'bisos.marmee.marmeeQmailHere', ]
 
 g_importedCmndsModules = cs.csuList_importedModules(csuList)
 
